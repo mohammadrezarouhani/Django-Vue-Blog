@@ -1,0 +1,112 @@
+@import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+
+*{
+  box-sizing: border-box;
+  
+} 
+
+body{
+  padding: 0px;
+  margin: 0px;
+  background: #f6f6f6;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  margin: 0px;
+  font-family: 'lora', serif;
+}
+
+a:hover {
+  color: #008489;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Candal', serif;
+  color: rgb(78, 77, 77);
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  margin: 0px;
+  font-family: 'lora', serif;
+}
+
+a:hover {
+  color: #008489;
+}
+
+
+.btn{
+  padding: .5rem 1rem;
+  background: #006669;
+  color: black;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.btn:hover{
+  padding: .5rem 1rem;
+  background: #003a3c;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.text-input{
+  width: 80%;
+  height: 40px;
+  display: block;
+  margin-top: 8px;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding-left: 15px;
+  border: 2px solid gray;
+  font-family: 'Lora',serif;
+  transition: .2s;
+} 
+
+.text-input:focus-visible{
+  outline:none;
+  border: 2px solid #03a3a9;
+  transform: .2s;
+}
+
+.send-button{
+  background: white;
+  border: 1px solid black ;
+  font-size: .8rem;
+  margin-top: 8px;
+  border-radius: 3px;
+  display: inline;
+  height: 25px;
+  width: 75px;
+  transition: all .3s;
+}
+.send-button:hover{
+  background: #008489;
+  color:white;
+  transition: all .3s;
+}
+
+
+.text-muted{
+  color: gray;
+  font-size: .8rem;
+  display: flex;
+  gap: .3rem;
+}
+
+span{
+  font-size: 1.2rem !important;
+}
+
+
