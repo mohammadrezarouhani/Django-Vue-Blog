@@ -1,19 +1,35 @@
 <script setup>
+import { reactive } from 'vue'
 import { RouterLink } from 'vue-router';
+import useAuthStore from '../stores/authStore';
+import useUserStore from '../stores/userStore';
+
+const authStore = useAuthStore()
+const userStore = useUserStore()
+
+const credentials = reactive({
+    'username': null,
+    'password': null
+})
+
+const onSubmitForm = () => {
+    authStore.handleLogin(credentials)
+}
+
 </script>
 
 <template>
     <div class="container">
         <div class="center">
             <h1>Login</h1>
-            <form method="post" action="/api/signup">
+            <form @submit.prevent="onSubmitForm">
                 <div class="txt_field">
-                    <input type="text" required>
+                    <input v-model="credentials.username" type="text" required>
                     <span></span>
                     <label>Username</label>
                 </div>
                 <div class="txt_field">
-                    <input type="password" required>
+                    <input v-model="credentials.password" type="password" required>
                     <span></span>
                     <label>Password</label>
                 </div>
@@ -35,7 +51,8 @@ import { RouterLink } from 'vue-router';
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
-.container{
+
+.container {
     margin: 0;
     padding: 0;
     background: linear-gradient(120deg, #2980b9, white);
@@ -43,6 +60,7 @@ import { RouterLink } from 'vue-router';
     width: 100vw;
     overflow: hidden;
 }
+
 .center {
     position: absolute;
     top: 50%;

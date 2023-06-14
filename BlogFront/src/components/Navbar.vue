@@ -1,10 +1,14 @@
 <script setup>
+import useAuthStore from '../stores/authStore';
+
+const authStore=useAuthStore()
+
 </script>
 
 <template>
     <header>
         <div class="logo">
-            <h1 class="logo-text"><span>My</span>Blog</h1>
+            <h1 class="logo-text">MyPersonalBlog</h1>
         </div>
         <ul class="nav show">
             <li><a href="#">Home</a></li>
@@ -20,7 +24,7 @@
                 </a>
                 <ul>
                     <li><a href="#">Dashboard</a></li>
-                    <li class="logout"><a href="#">Logout</a></li>
+                    <li @click="authStore.handleLogout" class="logout"><a href="#">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -29,29 +33,6 @@
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap');
-
-a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.1rem;
-}
-
-
-a {
-    text-decoration: none;
-    color: black;
-    margin: 0px;
-    font-family: 'Lora', serif;
-}
-
-a:hover {
-    color: #008489;
-    font-weight: 600;
-    transition: all 100ms ease;
-}
-
-
-
 header * {
     color: black;
 }
@@ -77,9 +58,7 @@ header .logo-text {
     color: white;
 }
 
-header .logo-text span {
-    color: #00f1fa;
-}
+
 
 /* nav bar */
 header ul {
@@ -101,18 +80,15 @@ header ul li a {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 65px;
+    height: 100%;
     margin-right: 1rem;
-    font-size: 1.1em;
-    text-decoration: none;
-    text-align: center;
+    font-size: 1.2rem;
 }
 
-header ul li a:hover {
-    color: black;
-    transition: 0.5;
+header ul li > a:hover {
+    color: rgba(255, 0, 0, 0.67);
+  transition: all 300ms ease;
 }
-
 
 /* drop down menu  */
 header ul li ul {
@@ -135,20 +111,6 @@ header ul li:hover ul {
 
 header ul li ul li {
     width: 100%;
-}
-
-header ul li ul li a {
-    background: white;
-    color: black;
-    width: 100%;
-    transition: all 100ms ease;
-}
-
-header ul li ul li a:hover {
-    color: black;
-    font-size: large;
-    font-weight: 600;
-
 }
 
 header .logout a {

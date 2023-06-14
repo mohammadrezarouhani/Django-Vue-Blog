@@ -1,12 +1,14 @@
 <script setup>
-import { RouterLink } from 'vue-router';
-import { ref, reactive, provide } from 'vue'
+import { ref, reactive } from 'vue'
 import { storeToRefs } from 'pinia';
-import { useUserStore } from '../stores/usersStore'
+import { RouterLink } from 'vue-router';
+import  useAuthStore  from '../stores/authStore'
 import PopUP from '../components/PopUP.vue';
 
-const userStore = useUserStore()
-const { message, messageStatus } = storeToRefs(userStore)
+const authStore = useAuthStore()
+const { message, messageStatus } = storeToRefs(authStore)
+
+const showPopUp = ref(false)
 
 const creadentials = reactive({
     email: null,
@@ -16,22 +18,26 @@ const creadentials = reactive({
 })
 
 const onSubmitForm = () => {
-    userStore.handleSignUp({
+    authStore.handleSignUp({
         'username': creadentials.username,
-        'password': creadentials.password
+        'email': creadentials.email,
+        'password': creadentials.password,
+        'password_repeat': creadentials.password_repeat
     })
+
+    showPopUp.value = true
 }
 
 </script>
 
 <template>
     <div class="container">
-        <!-- <PopUP v-if="showPopUp" :message="message" :status="messageStatus" /> -->
+        <PopUP v-if="showPopUp" :message="message" :status="messageStatus" @dismiss="showPopUp=!showPopUp"/>
         <div class="center">
             <h1>SignUp</h1>
             <form @submit.prevent="onSubmitForm">
                 <div class="txt_field">
-                    <input type="text" v-model="creadentials.email" required>
+                    <input type="email" v-model="creadentials.email" required>
                     <span></span>
                     <label>email</label>
                 </div>
@@ -55,7 +61,7 @@ const onSubmitForm = () => {
                 <input type="submit" value="SignUp">
 
                 <div class="signup_link">
-                    already a member? <RouterLink to="login">Login</RouterLink>
+                    Already  have an Account? <RouterLink to="login">Login</RouterLink>
                 </div>
             </form>
         </div>

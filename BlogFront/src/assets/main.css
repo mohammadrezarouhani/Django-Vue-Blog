@@ -1,26 +1,17 @@
 @import './base.css';
-@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-*{
+
+* {
   box-sizing: border-box;
-  
-} 
+  font-family: 'Roboto', sans-serif;
 
-body{
+}
+
+body {
   padding: 0px;
   margin: 0px;
   background: #f6f6f6;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-  margin: 0px;
-  font-family: 'lora', serif;
-}
-
-a:hover {
-  color: #008489;
 }
 
 h1,
@@ -29,7 +20,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Candal', serif;
   color: rgb(78, 77, 77);
 }
 
@@ -37,15 +27,22 @@ a {
   text-decoration: none;
   color: black;
   margin: 0px;
-  font-family: 'lora', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: all 300ms ease;
 }
 
 a:hover {
-  color: #008489;
+  color: rgba(255, 0, 0, 0.67);
+  transition: all 300ms ease;
+}
+
+span {
+  font-size: 1.5rem !important;
 }
 
 
-.btn{
+.btn {
   padding: .5rem 1rem;
   background: #006669;
   color: black;
@@ -53,7 +50,7 @@ a:hover {
   border-radius: .25rem;
 }
 
-.btn:hover{
+.btn:hover {
   padding: .5rem 1rem;
   background: #003a3c;
   color: white;
@@ -61,7 +58,7 @@ a:hover {
   border-radius: .25rem;
 }
 
-.text-input{
+.text-input {
   width: 80%;
   height: 40px;
   display: block;
@@ -70,19 +67,19 @@ a:hover {
   font-size: 1rem;
   padding-left: 15px;
   border: 2px solid gray;
-  font-family: 'Lora',serif;
+  font-family: 'Lora', serif;
   transition: .2s;
-} 
+}
 
-.text-input:focus-visible{
-  outline:none;
+.text-input:focus-visible {
+  outline: none;
   border: 2px solid #03a3a9;
   transform: .2s;
 }
 
-.send-button{
+.send-button {
   background: white;
-  border: 1px solid black ;
+  border: 1px solid black;
   font-size: .8rem;
   margin-top: 8px;
   border-radius: 3px;
@@ -91,22 +88,17 @@ a:hover {
   width: 75px;
   transition: all .3s;
 }
-.send-button:hover{
+
+.send-button:hover {
   background: #008489;
-  color:white;
+  color: white;
   transition: all .3s;
 }
 
 
-.text-muted{
+.text-muted {
   color: gray;
   font-size: .8rem;
   display: flex;
   gap: .3rem;
 }
-
-span{
-  font-size: 1.2rem !important;
-}
-
-

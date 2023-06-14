@@ -1,15 +1,16 @@
 <script setup>
-import { Transition, ref, onMounted,inject } from 'vue';
-const { message, status } = defineProps(['message', 'status'])
+import { Transition, ref, onMounted } from 'vue';
 
-const show = inject('showPopUp')
+const { message, status } = defineProps(['message', 'status'])
+const emit=defineEmits(['dismiss'])
+const show=ref(true)
 
 const dismissPopup = () => {
-    show.value = false;
+    show.value=false
+    emit("dismiss")
 }
 
 onMounted(() => {
-    console.log(show.value)
     if (show.value) {
         setTimeout(dismissPopup, 3000)
     }
@@ -19,7 +20,7 @@ onMounted(() => {
 
 <template>
     <div class="popup">
-        <Transition name="popupShow" apear>
+        <Transition name="popupShow" appear>
             <p v-if="show" class="message" :class="status=='success' ? 'success' : 'error'">{{ message }}</p>
         </Transition>
 

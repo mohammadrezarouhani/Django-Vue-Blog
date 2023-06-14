@@ -10,7 +10,6 @@ onMounted(async () => {
     await blogApi.getAllArticles()
 })
 
-
 </script>
 
 <template>
@@ -21,7 +20,7 @@ onMounted(async () => {
                 <img :src="article.image" class="post-image">
                 <div class="post-info">
                     <h2>
-                        <a href="single.html" class="content-summary">{{ article.title }}</a>
+                        <a href="single.html">{{ article.title }}</a>
                     </h2>
 
                     <p class="post-summary">
@@ -43,7 +42,7 @@ onMounted(async () => {
                 <a href="#top" @click="blogApi.goToPage(blogApi.currentPage.value)">
                     {{ blogApi.currentPage.value }}
                 </a>
-                <a href="#top" @click="blogApi.goToPage(blogApi.currentPage.value+1)">
+                <a href="#top" @click="blogApi.goToPage(blogApi.currentPage.value + 1)">
                     {{ blogApi.currentPage.value + 1 }}
                 </a>....
                 <a href="#top" @click="blogApi.goToPage(blogApi.lastPage.value)">
@@ -96,7 +95,6 @@ onMounted(async () => {
     margin: 30px auto 30px;
     z-index: 100;
     display: flex;
-    font-family: 'candal', serif;
 }
 
 .content .left {
@@ -113,7 +111,6 @@ onMounted(async () => {
     width: 95%;
     height: 270px;
     margin: 10px auto;
-    /* background: white; */
     border-radius: 10px;
     background-color: white;
 }
@@ -162,7 +159,7 @@ onMounted(async () => {
     align-items: center;
     justify-content: center;
     bottom: 10px;
-    font-size: .8rem;
+    /* font-size: .8rem; */
 }
 
 /* ************************** */
