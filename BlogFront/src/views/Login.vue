@@ -55,7 +55,7 @@ const onSubmitForm = () => {
 .container {
     margin: 0;
     padding: 0;
-    background: linear-gradient(120deg, #2980b9, white);
+    background: var(--color-linear);
     height: 100vh;
     width: 100vw;
     overflow: hidden;
@@ -67,7 +67,7 @@ const onSubmitForm = () => {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    background: white;
+    background: var(--color-white);
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
 }
@@ -75,7 +75,7 @@ const onSubmitForm = () => {
 .center h1 {
     text-align: center;
     padding: 20px 0;
-    border-bottom: 1px solid silver;
+    border-bottom: 1px solid var(--color-silver);
 }
 
 .center form {
@@ -85,7 +85,7 @@ const onSubmitForm = () => {
 
 form .txt_field {
     position: relative;
-    border-bottom: 2px solid #adadad;
+    border-bottom: 2px solid var(--color-light);
     margin: 30px 0;
 }
 

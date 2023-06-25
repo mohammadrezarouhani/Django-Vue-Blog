@@ -15,7 +15,7 @@ onMounted(async () => {
 <template>
     <div class="content clearfix">
         <div class="left">
-            <h1 class="content-header" id="top">Recent Posts</h1>
+            <h1  class="content-header" id="top">Recent Posts</h1>
             <div class="post" v-for="article in blogApi.articles.value.results">
                 <img :src="article.image" class="post-image">
                 <div class="post-info">
@@ -54,7 +54,7 @@ onMounted(async () => {
         </div>
 
         <!-- post sidebar  recent post in rigt of the page with searchbar  -->
-        <div class="right">
+        <div  class="right">
             <div class="search-bar">
                 <h1 class="title">Search</h1>
                 <form action="index.html" method="post">

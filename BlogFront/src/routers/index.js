@@ -2,6 +2,8 @@ import { createRouter,createWebHistory } from "vue-router";
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
+import Article from '../views/Article.vue'
+import UserPannel from '../views/UserPannel.vue'
 
 const routers=createRouter({
     history:createWebHistory(),
@@ -12,6 +14,11 @@ const routers=createRouter({
             'component':Home
         },
         {
+            'path':'/pannel',
+            'name':'pannel',
+            'component':UserPannel
+        },
+        {
             'path':'/login',
             'name':'login',
             'component':Login
@@ -20,6 +27,11 @@ const routers=createRouter({
             'path':'/signup',
             'name':'signup',
             'component':Signup
+        },
+        {
+            'path':'/article/:id',
+            'name':'article',
+            'component':Article
         }
     ]
 })

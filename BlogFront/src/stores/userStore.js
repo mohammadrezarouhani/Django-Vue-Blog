@@ -6,14 +6,13 @@ import axiosInstance from "../services/axiosInstant";
 const useUserStore = defineStore('user', () => {
     const user = ref('')
 
-
     async function setUser() {
         await axiosInstance.get('/auth/users/me/', {
             headers: {
                 Authorization: `JWT ${window.localStorage.getItem('accessToken')}`,
             },
         }).then(response => {
-            console.log(response)
+            user.value=response.data
         }).catch(error => {
             console.log(error)
         })

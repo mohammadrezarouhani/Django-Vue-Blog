@@ -1,26 +1,41 @@
 <script setup>
 import useAuthStore from '../stores/authStore';
+import useUserStore from '../stores/userStore';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 
 const authStore=useAuthStore()
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
+
+const isAuthenticated = window.localStorage.getItem('isAuthenticated')
+
+onMounted(()=>{
+    if(isAuthenticated){
+        userStore.setUser()
+    }
+})
 
 </script>
 
 <template>
     <header>
         <div class="logo">
-            <h1 class="logo-text">MyPersonalBlog</h1>
+            <h1 class="logo-text">Personal Blog</h1>
         </div>
         <ul class="nav show">
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Services</a></li>
-            <!-- <li><a href="#">Login</a></li>
-            <li><a href="#">Signup</a></li> -->
-            <li>
+            <li v-if="!isAuthenticated"><a href="#">Login</a></li>
+            <li v-if="!isAuthenticated"><a href="#">Signup</a></li>
+            <li v-if="isAuthenticated" id="username">
                 <a href="#">
-                    <span class="material-symbols-sharp">person</span>
-                    Mohammmadreza rouhani
                     <span class="material-symbols-sharp">arrow_drop_down</span>
+                    &nbsp;
+                    {{ user.username }}
+                    &nbsp;
+                    <img src="../components/image/profile-1.jpg" alt="failed to load!!!" class="profile-image">
                 </a>
                 <ul>
                     <li><a href="#">Dashboard</a></li>
@@ -32,14 +47,13 @@ const authStore=useAuthStore()
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap');
+
 header * {
     color: black;
 }
 
 header {
-    background: linear-gradient(120deg, #2980b9, white);;
-    font-family: 'Lora', serif;
+    background: linear-gradient(120deg, #2980b9, white);
     height: 66px;
     display: flex;
     justify-content: space-between;
@@ -85,28 +99,33 @@ header ul li a {
     font-size: 1.2rem;
 }
 
-header ul li > a:hover {
+header ul li>a:hover {
     color: rgba(255, 0, 0, 0.67);
-  transition: all 300ms ease;
+    transition: all 300ms ease;
 }
 
 /* drop down menu  */
 header ul li ul {
-    background: white;
+    background: linear-gradient(120deg, white,#6890ab);
     position: absolute;
     top: 66px;
-    right: 0px;
-    width: 70%;
+    right: -1rem;
+    width: 10rem;
     height: 8rem;
     display: none;
     z-index: 999;
     margin-right: 1rem;
+    transition: all 300ms ease;
 }
 
 /*********** creating hover on drop down menu *************/
+
 header ul li:hover ul {
     display: flex;
     flex-direction: column;
+    border-radius: 0rem 0rem .3rem .3rem;
+    width: 10rem;
+    transition: all 300ms ease;
 }
 
 header ul li ul li {
@@ -119,5 +138,11 @@ header .logout a {
 
 header .menu-toggle {
     display: none;
+}
+
+.profile-image{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
 }
 </style>
