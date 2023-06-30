@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import serializers
-from .models import Post,Profile
+from .models import Post, Profile
 
 
 class PostSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
+
     date = serializers.DateTimeField(source='create_at', format='%d %B, %Y', read_only=True)
 
     class Meta:
@@ -15,7 +17,8 @@ class PostSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ['id', 'phone_number', 'image']
-        model=Profile
+        model = Profile
+
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)
@@ -23,4 +26,3 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'profile']
-

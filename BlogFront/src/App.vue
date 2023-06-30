@@ -1,17 +1,15 @@
 <script setup>
 import { onMounted } from 'vue';
 import { RouterView } from 'vue-router'
-// import  useUserStore  from './stores/userStore';
+import useAuthStore from './stores/authStore';
 
-// console.log(1)
-// const userStore=useUserStore()
-// const isAuthticated=window.localStorage.getItem('isAuthenticated')
-// onMounted(()=>{
-//     if(isAuthticated){
-//         userStore.setUser()
-//         console.log('App.vue')
-//     }
-// })
+const authStore=useAuthStore()
+
+onMounted(async()=>{
+    if(window.localStorage.getItem('isAuthenticated')){
+        await authStore.setUser()
+    }
+})
 
 </script>
 

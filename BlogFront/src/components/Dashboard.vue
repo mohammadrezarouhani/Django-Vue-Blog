@@ -1,3 +1,22 @@
+<script setup>
+import { onMounted,ref } from 'vue'
+import useUserBlogApi from '../composables/useUsersBlogApi'
+import useAuthStore from '../stores/authStore'
+
+const articlesCount=ref('')
+const authStore=useAuthStore()
+const userArticle = useUserBlogApi()
+const {articles}=userArticle
+
+
+onMounted(async () => {
+    await authStore.setUser()
+    await userArticle.setUserArticles(authStore.user.id)
+    articlesCount.value=articles.value.length
+})
+
+</script>
+
 <template>
     <div class="dahsboard">
         <div class="report">
@@ -5,16 +24,16 @@
                 <div class="card">
                     <span class="material-symbols-sharp " style="color: var(--color-primary);">comment</span>
                     <h2>Comments</h2>
-                    <h3>46</h3>
+                    <h3>10</h3>
                 </div>
                 <div class="card">
                     <span class="material-symbols-sharp" style="color: var(--color-danger);">pages</span>
                     <h2>Post</h2>
-                    <h3>46</h3>
+                    <h3>{{ articlesCount }}</h3>
                 </div>
             </div>
         </div>
-
+        
         <div class="recent-comment">
             <div class="comment">
                 <span class="material-symbols-sharp">reviews</span>
@@ -34,9 +53,10 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>title</td>
-                        <td>summary</td>
+                    <tr v-for="article in articles" :key="article.id">
+
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.summary.slice(0,25) }}.....  </td>
                         <td>23</td>
                         <td>2 july,2020</td>
                     </tr>
@@ -64,7 +84,7 @@
 .dahsboard .report .card-container {
     display: flex;
     gap: 2rem;
-    width:95%;
+    width: 95%;
     margin: 0px auto;
     margin-top: 1rem;
 }
@@ -129,12 +149,12 @@
     box-shadow: var(--box-shadow);
 }
 
-.dahsboard .recent-post table td{
+.dahsboard .recent-post table td {
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
 }
 
-.dahsboard .recent-post table tbody tr:last-child td{
-    border-bottom:none;
+.dahsboard .recent-post table tbody tr:last-child td {
+    border-bottom: none;
 }
 </style>

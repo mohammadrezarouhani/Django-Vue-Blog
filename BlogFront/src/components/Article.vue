@@ -1,5 +1,17 @@
 <script setup>
-import MainContent from './MainContent.vue';
+import { onMounted, ref } from 'vue'
+import useAuthStore from '../stores/authStore'
+import useBlogAPI from '../composables/useBlogAPI';
+
+const blogAPi = useBlogAPI()
+const authStore = useAuthStore()
+const { articles } = blogAPi
+
+onMounted(async () => {
+    await authStore.setUser()
+    await blogAPi.getAllArticles(authStore.user.id)
+})
+
 </script>
 
 <template>
@@ -17,63 +29,20 @@ import MainContent from './MainContent.vue';
 
         <main>
             <div class="card-container">
-                <div class="card">
-                    <img src="http://127.0.0.1:8000/media/post/2023-05-26/ArvanCloud___%D8%B3%D8%A7%D8%AE%D8%AA_%D8%A7%D8%A8%D8%B1%DA%A9_and_3_more_pages_-_Personal_-_Microsoft_Edge_29_0_ANHKXRJ.png"
-                        alt="">
+                <div class="card" v-for="article in articles" :key="article.id">
+                    <img :src="article.image">
                     <div class="content-info">
-                        <h2>title</h2>
-                        <p class="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nulla,
-                            voluptate animi id inventore deserunt praesentium sint amet aperiam non.</p>
-                    </div>
-                    <a href="#" class="detail">Details</a>
-                </div>
-
-                <div class="card">
-                    <img src="http://127.0.0.1:8000/media/post/2023-05-26/ArvanCloud___%D8%B3%D8%A7%D8%AE%D8%AA_%D8%A7%D8%A8%D8%B1%DA%A9_and_3_more_pages_-_Personal_-_Microsoft_Edge_29_0_ANHKXRJ.png"
-                        alt="">
-                    <div class="content-info">
-                        <h2>title</h2>
-                        <p class="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nulla,
-                            voluptate animi id inventore deserunt praesentium sint amet aperiam non.</p>
-                    </div>
-                    <a href="#" class="detail">Details</a>
-                </div>
-
-                <div class="card">
-                    <img src="http://127.0.0.1:8000/media/post/2023-05-26/ArvanCloud___%D8%B3%D8%A7%D8%AE%D8%AA_%D8%A7%D8%A8%D8%B1%DA%A9_and_3_more_pages_-_Personal_-_Microsoft_Edge_29_0_ANHKXRJ.png"
-                        alt="">
-                    <div class="content-info">
-                        <h2>title</h2>
-                        <p class="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nulla,
-                            voluptate animi id inventore deserunt praesentium sint amet aperiam non.</p>
-                    </div>
-                    <a href="#" class="detail">Details</a>
-                </div>
-
-                <div class="card">
-                    <img src="http://127.0.0.1:8000/media/post/2023-05-26/ArvanCloud___%D8%B3%D8%A7%D8%AE%D8%AA_%D8%A7%D8%A8%D8%B1%DA%A9_and_3_more_pages_-_Personal_-_Microsoft_Edge_29_0_ANHKXRJ.png"
-                        alt="">
-                    <div class="content-info">
-                        <h2>title</h2>
-                        <p class="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nulla,
-                            voluptate animi id inventore deserunt praesentium sint amet aperiam non.</p>
-                    </div>
-                    <a href="#" class="detail">Details</a>
-                </div>
-
-                <div class="card">
-                    <img src="http://127.0.0.1:8000/media/post/2023-05-26/ArvanCloud___%D8%B3%D8%A7%D8%AE%D8%AA_%D8%A7%D8%A8%D8%B1%DA%A9_and_3_more_pages_-_Personal_-_Microsoft_Edge_29_0_ANHKXRJ.png"
-                        alt="">
-                    <div class="content-info">
-                        <h2>title</h2>
-                        <p class="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nulla,
-                            voluptate animi id inventore deserunt praesentium sint amet aperiam non.</p>
+                        <h2>{{ article.title }}</h2>
+                        <p class="summary">{{ article.summary.slice(0, 30) }} <span
+                                v-if="article.summary.length > 30">...</span></p>
                     </div>
                     <a href="#" class="detail">Details</a>
                 </div>
             </div>
         </main>
     </div>
+    <!-- <Pagination :currentPage="currentPage" :lastPage="lastPage" @next="blogApi.nextPage"
+        @prev="blogApi.prevPage" @goTo="blogApi.goToPage" /> -->
 </template>
 
 <style>
@@ -99,7 +68,7 @@ img {
     position: relative;
 }
 
-.article header .search input[type="text"]{
+.article header .search input[type="text"] {
     height: 2rem;
     padding-left: 2rem;
     font-size: 1.2rem;
@@ -108,24 +77,24 @@ img {
     border-radius: var(--border-radius-2);
 }
 
-.article header .search span{
+.article header .search span {
     position: absolute;
     font-size: 2rem !important;
 }
 
-.article header .add{
-    color:#008489;
+.article header .add {
+    color: #008489;
     cursor: pointer;
     background-color: var(--color-white);
     border-radius: 50%;
     font-size: 2.5rem !important;
-    box-shadow: 0 0 .4rem  #008489;
+    box-shadow: 0 0 .4rem #008489;
     transition: all 300ms ease;
 }
 
-.article header .material-symbols-sharp:hover{
-box-shadow: none;
-transition: all 300ms ease;
+.article header .material-symbols-sharp:hover {
+    box-shadow: none;
+    transition: all 300ms ease;
 }
 
 main {
@@ -139,21 +108,24 @@ main .card-container {
 }
 
 main .card-container .card {
-    width: 30%;
+    width: 25%;
+    height: 20rem;
     display: flex;
     flex-direction: column;
     background-color: var(--color-white);
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow-1);
+    position: relative;
 }
 
-main .card-container .card:hover{
+
+main .card-container .card:hover {
     box-shadow: none;
     transition: all 300ms ease;
 }
 
-main .card-container .card img{
-    border-radius: 1rem 1rem  0rem 0rem;
+main .card-container .card img {
+    border-radius: 1rem 1rem 0rem 0rem;
 }
 
 main .card-container .card .content-info {
@@ -162,16 +134,17 @@ main .card-container .card .content-info {
 }
 
 main .card-container .card a {
+    position: absolute;
+    bottom: 0;
     border-radius: 0rem 0rem 2rem 2rem;
     text-align: center;
-    margin:auto 0px;
+    margin: auto 0px;
     display: block;
     width: 100%;
-    height:3rem;
     color: var(--color-primary);
 }
 
-main .card-container .card a:hover{
+main .card-container .card a:hover {
     background-color: var(--color-light);
 }
 </style>

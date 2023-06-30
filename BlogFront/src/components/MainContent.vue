@@ -1,10 +1,12 @@
 
 <script setup>
-import { RouterLink } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
 import useBlogAPI from '../composables/useBlogAPI'
+import Pagination from './Pagination.vue'
 
 const blogApi = useBlogAPI()
+const route=useRoute()
 
 onMounted(async () => {
     await blogApi.getAllArticles()
@@ -15,8 +17,8 @@ onMounted(async () => {
 <template>
     <div class="content clearfix">
         <div class="left">
-            <h1  class="content-header" id="top">Recent Posts</h1>
-            <div class="post" v-for="article in blogApi.articles.value.results">
+            <h1 class="content-header" id="top">Recent Posts</h1>
+            <div class="post" v-for="article in blogApi.articles.value.results" :key="article.id">
                 <img :src="article.image" class="post-image">
                 <div class="post-info">
                     <h2>
@@ -31,30 +33,16 @@ onMounted(async () => {
                         &nbsp;
                         <span class="material-symbols-sharp">calendar_month</span>{{ article.date }}
                     </div>
-                    <a href="single.html" class="btn read-more">ReadMore</a>
+                    <RouterLink :to="{ name: 'article', params: { id: article.id }}" class="btn read-more">ReadMore</RouterLink>
                 </div>
             </div>
-            <div class="pagination">
-                <a href="#top" @click="blogApi.prevPage">
-                    <span class="material-symbols-sharp">first_page</span>
-                </a>
 
-                <a href="#top" @click="blogApi.goToPage(blogApi.currentPage.value)">
-                    {{ blogApi.currentPage.value }}
-                </a>
-                <a href="#top" @click="blogApi.goToPage(blogApi.currentPage.value + 1)">
-                    {{ blogApi.currentPage.value + 1 }}
-                </a>....
-                <a href="#top" @click="blogApi.goToPage(blogApi.lastPage.value)">
-                    {{ blogApi.lastPage }}
-                </a>
-
-                <a href="#top" @click="blogApi.nextPage"><span class="material-symbols-sharp">last_page </span></a>
-            </div>
+            <Pagination :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage" @next="blogApi.nextPage"
+                @prev="blogApi.prevPage" @goTo="blogApi.goToPage" />
         </div>
 
         <!-- post sidebar  recent post in rigt of the page with searchbar  -->
-        <div  class="right">
+        <div class="right">
             <div class="search-bar">
                 <h1 class="title">Search</h1>
                 <form action="index.html" method="post">

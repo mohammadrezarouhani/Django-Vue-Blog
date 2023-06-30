@@ -2,10 +2,8 @@
 import { reactive } from 'vue'
 import { RouterLink } from 'vue-router';
 import useAuthStore from '../stores/authStore';
-import useUserStore from '../stores/userStore';
 
 const authStore = useAuthStore()
-const userStore = useUserStore()
 
 const credentials = reactive({
     'username': null,
@@ -55,7 +53,7 @@ const onSubmitForm = () => {
 .container {
     margin: 0;
     padding: 0;
-    background: var(--color-linear);
+    background: linear-gradient(120deg, #2980b9, white);
     height: 100vh;
     width: 100vw;
     overflow: hidden;

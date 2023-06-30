@@ -1,20 +1,16 @@
 <script setup>
+import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 import useAuthStore from '../stores/authStore';
-import useUserStore from '../stores/userStore';
-import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
 
-const authStore=useAuthStore()
-const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
+const authStore = useAuthStore()
+const isAuthenticated = ref(window.localStorage.getItem('isAuthenticated'))
 
-const isAuthenticated = window.localStorage.getItem('isAuthenticated')
-
-onMounted(()=>{
-    if(isAuthenticated){
-        userStore.setUser()
+window.onstorage = (event) => {
+    if (event.key === 'isAuthenticated') {
+        isAuthenticated.value = event.newValue;
     }
-})
+}
 
 </script>
 
@@ -24,21 +20,28 @@ onMounted(()=>{
             <h1 class="logo-text">Personal Blog</h1>
         </div>
         <ul class="nav show">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li v-if="!isAuthenticated"><a href="#">Login</a></li>
-            <li v-if="!isAuthenticated"><a href="#">Signup</a></li>
+            <li>
+                <RouterLink to="/">Home</RouterLink>
+            </li>
+            <!-- <li><a href="#"><RouterLink to="/about">About</RouterLink></a></li> -->
+            <li v-if="!isAuthenticated">
+                <RouterLink to="/login">login</RouterLink>
+            </li>
+            <li v-if="!isAuthenticated">
+                <RouterLink to="/signup">signup</RouterLink>
+            </li>
             <li v-if="isAuthenticated" id="username">
                 <a href="#">
                     <span class="material-symbols-sharp">arrow_drop_down</span>
                     &nbsp;
-                    {{ user.username }}
+                    {{ authStore.user.username }}
                     &nbsp;
                     <img src="../components/image/profile-1.jpg" alt="failed to load!!!" class="profile-image">
                 </a>
                 <ul>
-                    <li><a href="#">Dashboard</a></li>
+                    <li>
+                        <RouterLink to="/pannel">Dashboard</RouterLink>
+                    </li>
                     <li @click="authStore.handleLogout" class="logout"><a href="#">Logout</a></li>
                 </ul>
             </li>
@@ -47,7 +50,6 @@ onMounted(()=>{
 </template>
 
 <style scoped>
-
 header * {
     color: black;
 }
@@ -106,7 +108,7 @@ header ul li>a:hover {
 
 /* drop down menu  */
 header ul li ul {
-    background: linear-gradient(120deg, white,#6890ab);
+    background: linear-gradient(120deg, white, #6890ab);
     position: absolute;
     top: 66px;
     right: -1rem;
@@ -140,9 +142,8 @@ header .menu-toggle {
     display: none;
 }
 
-.profile-image{
+.profile-image {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-}
-</style>
+}</style>

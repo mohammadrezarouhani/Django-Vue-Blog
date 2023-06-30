@@ -1,20 +1,11 @@
 
 <script setup>
-import { onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 import Navbar from '../components/Navbar.vue';
 import Footer from '../components/Footer.vue';
 import SingleArticle from '../components/SingleArticle.vue'
-import  useUserStore  from '../stores/userStore';
+import useAuthStore from '../stores/authStore';
 
-
-const userStore=useUserStore()
-const isAuthticated=window.localStorage.getItem('isAuthenticated')
-
-onMounted(()=>{
-    if(isAuthticated){
-        userStore.setUser()
-    }
-})
 
 </script>
 

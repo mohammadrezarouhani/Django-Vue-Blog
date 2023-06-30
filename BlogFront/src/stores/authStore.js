@@ -1,9 +1,16 @@
+import axios from "axios";
 import { defineStore } from "pinia";
-import axiosInstance from "../services/axiosInstant.js";
-import { ref } from "vue";
-import {  useRouter } from "vue-router";
+import { ref, reactive } from "vue";
+import { useRouter } from "vue-router";
+import { baseURL } from "../services/baseUrl";
+import axiosInstance from "../services/axios";
 
 const useAuthStore = defineStore('auth', () => {
+    const user = reactive({
+        id: null,
+        username: null,
+        email: null
+    })
     const refreshToken = ref("")
     const accessToken = ref("")
     const message = ref("")
@@ -11,8 +18,20 @@ const useAuthStore = defineStore('auth', () => {
     const router = useRouter()
 
 
+    async function setUser() {
+        await axiosInstance.get('/auth/users/me/',{
+            headers:{
+                Authorization:`JWT ${window.localStorage.getItem('accessToken')}`
+            }
+        }).then(response => {
+            Object.assign(user,response.data)
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
     async function handleLogin(credentials) {
-        const response = await axiosInstance.post('/auth/token/jwt/create/', {
+        const response = await axios.post(`${baseURL}/auth/token/jwt/create/`, {
             'username': credentials.username,
             'password': credentials.password
         }).then(response => {
@@ -20,10 +39,11 @@ const useAuthStore = defineStore('auth', () => {
             refreshToken.value = response.data.refresh
             message.value = "user authorized succesfully!"
             messageStatus.value = 'success'
-            
-            window.localStorage.setItem('accessToken',accessToken.value)
-            window.localStorage.setItem('refreshToken',refreshToken.value)
-            window.localStorage.setItem('isAuthenticated',true)
+
+            window.localStorage.setItem('accessToken', accessToken.value)
+            window.localStorage.setItem('refreshToken', refreshToken.value)
+            window.localStorage.setItem('isAuthenticated', true)
+            setUser()
             router.push('/')
         }).catch(error => {
             messageStatus.value = 'error'
@@ -53,7 +73,7 @@ const useAuthStore = defineStore('auth', () => {
             return
         }
 
-        const response = await axiosInstance.post('/auth/users/', {
+        const response = await axios.post(`${baseURL}/auth/users/`, {
             'username': credentials.username,
             'email': credentials.email,
             password: credentials.password
@@ -61,7 +81,7 @@ const useAuthStore = defineStore('auth', () => {
             messageStatus.value = "success"
             message.value = `user ${credentials.username} created successfully`;
             setTimeout(() => router.push('/login'), 3000)
-        }).catch(error => { 
+        }).catch(error => {
             if (error.code == `ERR_BAD_REQUEST`) {
                 message.value = error.response.data.username[0]
             } else {
@@ -89,8 +109,12 @@ const useAuthStore = defineStore('auth', () => {
 
 
     return {
+        user,
+        refreshToken,
+        accessToken,
         message,
         messageStatus,
+        setUser,
         handleLogin,
         handleSignUp,
         handleLogout
