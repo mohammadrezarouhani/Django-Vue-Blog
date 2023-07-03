@@ -1,17 +1,17 @@
 <script setup>
 import { onMounted,ref } from 'vue'
-import useUserBlogApi from '../composables/useUsersBlogApi'
-import useAuthStore from '../stores/authStore'
+import useBlogAPI from '../composables/useBlogAPI';
+import useAuthStore from '../stores/AuthStore'
 
 const articlesCount=ref('')
 const authStore=useAuthStore()
-const userArticle = useUserBlogApi()
-const {articles}=userArticle
+const blogApi = useBlogAPI()
+const {articles}=blogApi
 
 
 onMounted(async () => {
     await authStore.setUser()
-    await userArticle.setUserArticles(authStore.user.id)
+    await blogApi.getUserArticles(authStore.user.id)
     articlesCount.value=articles.value.length
 })
 

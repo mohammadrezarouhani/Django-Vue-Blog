@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import { RouterView } from 'vue-router'
-import useAuthStore from './stores/authStore';
-
+import useAuthStore from './stores/AuthStore';
+import Popup from './components/Popup.vue'
 const authStore=useAuthStore()
 
 onMounted(async()=>{
@@ -14,7 +14,14 @@ onMounted(async()=>{
 </script>
 
 <template>
+    <Popup class="popup"/>
     <RouterView />
 </template>
 
-<style scoped></style>
+<style scoped>
+
+.popup{
+    position: absolute;
+}
+
+</style>

@@ -93,6 +93,5 @@ aside .tab-container .tab.active {
 aside .tab-container .tab:last-child {
     width: 100%;
     position: absolute;
-    top: 40rem;
 }
 </style>

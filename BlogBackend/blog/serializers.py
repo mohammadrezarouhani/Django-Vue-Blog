@@ -6,7 +6,6 @@ from .models import Post, Profile
 
 class PostSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-
     date = serializers.DateTimeField(source='create_at', format='%d %B, %Y', read_only=True)
 
     class Meta:
@@ -16,7 +15,13 @@ class PostSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['id', 'phone_number', 'image']
+        fields = ['id', 'user', 'phone_number', 'summary', 'image']
+        model = Profile
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['phone_number', 'summary', 'image']
         model = Profile
 
 

@@ -5,11 +5,14 @@ import { useRouter } from "vue-router";
 import { baseURL } from "../services/baseUrl";
 import axiosInstance from "../services/axios";
 
+
 const useAuthStore = defineStore('auth', () => {
     const user = reactive({
         id: null,
+        first_name:null,
+        last_name:null,
         username: null,
-        email: null
+        email: null,
     })
     const refreshToken = ref("")
     const accessToken = ref("")
@@ -25,13 +28,15 @@ const useAuthStore = defineStore('auth', () => {
             }
         }).then(response => {
             Object.assign(user,response.data)
+
+    
         }).catch(error => {
             console.log(error)
         })
     }
 
     async function handleLogin(credentials) {
-        const response = await axios.post(`${baseURL}/auth/token/jwt/create/`, {
+         await axios.post(`${baseURL}/auth/token/jwt/create/`, {
             'username': credentials.username,
             'password': credentials.password
         }).then(response => {
@@ -73,7 +78,7 @@ const useAuthStore = defineStore('auth', () => {
             return
         }
 
-        const response = await axios.post(`${baseURL}/auth/users/`, {
+        await axios.post(`${baseURL}/auth/users/`, {
             'username': credentials.username,
             'email': credentials.email,
             password: credentials.password

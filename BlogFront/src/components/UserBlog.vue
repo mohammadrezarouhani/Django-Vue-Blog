@@ -1,15 +1,16 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import useAuthStore from '../stores/authStore'
-import useBlogAPI from '../composables/useBlogAPI';
+import useAuthStore from '../stores/AuthStore'
+import useBlogAPI from '../composables/useBlogAPI'
+import Pagination from '../components/Pagination.vue'
 
-const blogAPi = useBlogAPI()
+const blogApi = useBlogAPI()
 const authStore = useAuthStore()
-const { articles } = blogAPi
+const { articles } = blogApi
 
 onMounted(async () => {
     await authStore.setUser()
-    await blogAPi.getAllArticles(authStore.user.id)
+    await blogApi.getUserArticles(authStore.user.id)
 })
 
 </script>
@@ -17,7 +18,7 @@ onMounted(async () => {
 <template>
     <div class="article">
         <header>
-            <h1>Articles</h1>
+            <h1>User Blogs</h1>
 
             <div class="search">
                 <span class="material-symbols-sharp" style="font-size: 2rem;">search</span>
@@ -27,6 +28,8 @@ onMounted(async () => {
             <span class="material-symbols-sharp add">add</span>
         </header>
 
+        <Pagination class="pagination" :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage"
+            :user="authStore.user.id" @next="blogApi.gotoNextPage" @prev="blogApi.gotoPrevPage" @goTo="blogApi.goToPage" />
         <main>
             <div class="card-container">
                 <div class="card" v-for="article in articles" :key="article.id">
@@ -36,13 +39,20 @@ onMounted(async () => {
                         <p class="summary">{{ article.summary.slice(0, 30) }} <span
                                 v-if="article.summary.length > 30">...</span></p>
                     </div>
-                    <a href="#" class="detail">Details</a>
+                    <div class="actions">
+                        <span class="material-symbols-sharp open" >
+                            open_in_new
+                        </span>
+
+                        <span class="material-symbols-sharp delete">
+                            delete
+                        </span>
+                    </div>
                 </div>
             </div>
         </main>
+
     </div>
-    <!-- <Pagination :currentPage="currentPage" :lastPage="lastPage" @next="blogApi.nextPage"
-        @prev="blogApi.prevPage" @goTo="blogApi.goToPage" /> -->
 </template>
 
 <style>
@@ -108,8 +118,8 @@ main .card-container {
 }
 
 main .card-container .card {
-    width: 25%;
-    height: 20rem;
+    width: 28%;
+    height: 22rem;
     display: flex;
     flex-direction: column;
     background-color: var(--color-white);
@@ -146,5 +156,26 @@ main .card-container .card a {
 
 main .card-container .card a:hover {
     background-color: var(--color-light);
+}
+
+main .card-container .card .actions{
+    display: flex;
+    align-items: right;
+    position: absolute;
+    gap: 1rem;
+    bottom: 10px;
+    right: 20px;
+}
+
+main .card-container .card .actions .delete{
+    color: var(--color-info-light);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+main .card-container .card .actions .open{
+    color: var( --color-primary);
+    font-weight: bold;
+    cursor: pointer;
 }
 </style>

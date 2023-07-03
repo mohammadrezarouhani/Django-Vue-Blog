@@ -13,6 +13,12 @@ body {
   background: #f6f6f9;
 }
 
+input[type="text"],
+textarea {
+  font-size: 1.1rem;
+  color: var(--color-dark-variant);
+}
+
 h1,
 h2,
 h4,

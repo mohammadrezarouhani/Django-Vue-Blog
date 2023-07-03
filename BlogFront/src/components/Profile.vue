@@ -1,16 +1,25 @@
 <script setup>
+import { onMounted, reactive } from 'vue';
+import useAuthStore from '../stores/AuthStore';
+
+const authUser = useAuthStore()
+
+function changeImage(event) {
+    const file = event.target.files[0];
+}
 
 </script>
 
 <template>
     <div class="profile">
         <div class="person-info">
-            <img src="./image/profile-1.jpg" alt="">
-            <label class="lfullname">Mohammadreza Rouhani</label>
-            <label class="lemail">rezarouhanitonekaboni@gmail.com</label>
+            <img :src="authUser.user.profile.image" alt="">
+            <input type="file" accept="image/*" @change="changeImage">
+            <label class="lfullname">{{ authUser.user.username }}</label>
+            <label class="lemail">{{ authUser.user.email }}</label>
             <h2>About</h2>
             <p class="about">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas voluptatem vitae non, facere cum itaque.
+                {{ authUser.user.profile.summary }}
             </p>
         </div>
 
@@ -18,23 +27,29 @@
             <div class="table-container">
                 <div class="table-row">
                     <div class="table-cell table-header">Name</div>
-                    <div class="table-cell"><input type="text" value="mohammadreza"></div>
+                    <div class="table-cell"><input type="text" v-model="authUser.user.first_name"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Family</div>
-                    <div class="table-cell"><input type="text" value="rouhani"></div>
+                    <div class="table-cell"><input type="text" v-model="authUser.user.last_name"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Phone</div>
-                    <div class="table-cell"><input type="text" value="+9154561236"></div>
+                    <div class="table-cell"><input type="text" v-model="authUser.user.profile.phone_number"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Email</div>
-                    <div class="table-cell"><input type="text" value="rezarouhanitonekaboni@gmail.com"></div>
+                    <div class="table-cell"><input type="text" v-model="authUser.user.email"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Address</div>
-                    <div class="table-cell"><textarea name="address" id="" cols="60" rows="10"> some text</textarea></div>
+                    <div class="table-cell"><textarea name="address" id="" cols="60" rows="10"
+                            v-model="authUser.user.profile.address"> some text</textarea></div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell table-header">Summary</div>
+                    <div class="table-cell"><textarea name="address" id="" cols="60" rows="10"
+                            v-model="authUser.user.profile.summary"> some text</textarea></div>
                 </div>
                 <div class="table-row">
                     <input type="submit" value="Update">
@@ -88,8 +103,9 @@
 
 .table-row {
     display: flex;
-    margin-top: 2.4rem;
-    gap: 1rem;
+    margin-top: 0.4rem;
+    gap: 2rem;
+    height: 50%;
 }
 
 .table-cell {
@@ -110,6 +126,8 @@
 
 .table-container textarea {
     font-size: 1.2rem;
+    border: 1px solid;
+    height: 8rem;
 }
 
 .table-container input[type="submit"] {

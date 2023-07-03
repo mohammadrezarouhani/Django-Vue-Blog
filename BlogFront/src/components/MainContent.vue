@@ -6,7 +6,9 @@ import useBlogAPI from '../composables/useBlogAPI'
 import Pagination from './Pagination.vue'
 
 const blogApi = useBlogAPI()
-const route=useRoute()
+const route = useRoute()
+
+const { articles } = blogApi
 
 onMounted(async () => {
     await blogApi.getAllArticles()
@@ -18,11 +20,12 @@ onMounted(async () => {
     <div class="content clearfix">
         <div class="left">
             <h1 class="content-header" id="top">Recent Posts</h1>
-            <div class="post" v-for="article in blogApi.articles.value.results" :key="article.id">
+
+            <div class="post" v-for="article in articles">
                 <img :src="article.image" class="post-image">
                 <div class="post-info">
                     <h2>
-                        <a href="single.html">{{ article.title }}</a>
+                        <RouterLink :to="{ name: 'article', params: { id: article.id } }">{{ article.title }}</RouterLink>
                     </h2>
 
                     <p class="post-summary">
@@ -33,12 +36,12 @@ onMounted(async () => {
                         &nbsp;
                         <span class="material-symbols-sharp">calendar_month</span>{{ article.date }}
                     </div>
-                    <RouterLink :to="{ name: 'article', params: { id: article.id }}" class="btn read-more">ReadMore</RouterLink>
+                    <RouterLink :to="{ name: 'article', params: { id: article.id } }" class="btn read-more">ReadMore
+                    </RouterLink>
                 </div>
             </div>
-
-            <Pagination :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage" @next="blogApi.nextPage"
-                @prev="blogApi.prevPage" @goTo="blogApi.goToPage" />
+            <Pagination :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage" @next="blogApi.gotoNextPage"
+                @prev="blogApi.gotoPrevPage" @goTo="blogApi.goToPage" />
         </div>
 
         <!-- post sidebar  recent post in rigt of the page with searchbar  -->

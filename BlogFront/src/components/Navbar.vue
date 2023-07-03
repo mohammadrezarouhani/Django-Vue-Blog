@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import useAuthStore from '../stores/authStore';
+import useAuthStore from '../stores/AuthStore';
 
 const authStore = useAuthStore()
 const isAuthenticated = ref(window.localStorage.getItem('isAuthenticated'))
@@ -17,7 +17,7 @@ window.onstorage = (event) => {
 <template>
     <header>
         <div class="logo">
-            <h1 class="logo-text">Personal Blog</h1>
+            <RouterLink :to="{ name: 'home'}" ><h1 class="logo-text">Personal Blog</h1></RouterLink>
         </div>
         <ul class="nav show">
             <li>
@@ -69,12 +69,13 @@ header .logo {
 }
 
 header .logo-text {
-    size: inherit;
-    margin: 12px;
     color: white;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
-
-
 
 /* nav bar */
 header ul {

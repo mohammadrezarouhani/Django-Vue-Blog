@@ -2,10 +2,11 @@
 import { ref, onBeforeMount } from 'vue';
 import Navbar from '../components/Navbar.vue';
 import Dashboard from '../components/Dashboard.vue';
-import Article from '../components/Article.vue';
+import UserBlog from '../components/UserBlog.vue';
 import Sidebar from '../components/Sidebar.vue';
 import Profile from '../components/Profile.vue';
 import useAuthStore from '../stores/authStore';
+
 const authStore = useAuthStore()
 
 const currentTabIndex = ref(0)
@@ -16,12 +17,9 @@ function onTabChange(index) {
 
 const componentList = [
     Dashboard,
-    Article,
+    UserBlog,
     Profile
 ]
-
-
-
 
 </script>
 
@@ -30,9 +28,7 @@ const componentList = [
     <div class="container">
         <Navbar class="navbar" />
         <Sidebar class="sidebar" @tabChange="onTabChange" />
-
         <Component :is="componentList[currentTabIndex]" class="component" />
-
     </div>
 </template>
 

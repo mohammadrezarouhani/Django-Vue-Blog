@@ -2,7 +2,7 @@ import { createRouter,createWebHistory } from "vue-router";
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
-import Article from '../views/Article.vue'
+import Blog from '../views/Blog.vue'
 import UserPannel from '../views/UserPannel.vue'
 
 const routers=createRouter({
@@ -31,7 +31,7 @@ const routers=createRouter({
         {
             'path':'/article/:id',
             'name':'article',
-            'component':Article
+            'component':Blog
         }
     ]
 })

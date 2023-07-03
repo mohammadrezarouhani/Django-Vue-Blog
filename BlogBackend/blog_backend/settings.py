@@ -17,7 +17,9 @@ ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://127.0.0.1:5174",
+    "http://localhost:5174"
 ]
 # Application definition
 
@@ -35,6 +37,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'blog',
     'user',
+    'comments',
+    'blog_custom'
 ]
 
 MIDDLEWARE = [
@@ -137,6 +141,7 @@ SIMPLE_JWT = {
 DJOSER = {
     'SERIALIZERS': {
         'user': 'blog.serializers.UserSerializer',
+        'current_user': 'blog.serializers.UserSerializer',
     },
 }
 

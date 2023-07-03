@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import Profile,Post
+from django.contrib.admin import ModelAdmin
+from .models import Profile, Post
 
 
-admin.site.register(Profile)
+@admin.register(Profile)
+class ProfileAdmin(ModelAdmin):
+    list_display = ['user', 'image']
+
 admin.site.register(Post)

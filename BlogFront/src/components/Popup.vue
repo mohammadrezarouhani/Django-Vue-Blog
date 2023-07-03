@@ -3,7 +3,7 @@ import { Transition, ref, onMounted } from 'vue';
 
 const { message, status } = defineProps(['message', 'status'])
 const emit=defineEmits(['dismiss'])
-const show=ref(true)
+const show=ref(false)
 
 const dismissPopup = () => {
     show.value=false

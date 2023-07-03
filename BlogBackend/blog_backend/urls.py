@@ -7,6 +7,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/blog/', include('blog.urls')),
+    path('api/comments/',include('comments.urls')),
+    path('api/blog_custom/', include('blog_custom.urls')),
 
     path('auth/', include('djoser.urls')),
     path('auth/token/', include('djoser.urls.jwt')),

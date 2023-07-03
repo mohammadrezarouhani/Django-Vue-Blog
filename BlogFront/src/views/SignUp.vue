@@ -32,7 +32,6 @@ const onSubmitForm = () => {
 
 <template>
     <div class="container">
-        <PopUP v-if="showPopUp" :message="message" :status="messageStatus" @dismiss="showPopUp=!showPopUp"/>
         <div class="center">
             <h1>SignUp</h1>
             <form @submit.prevent="onSubmitForm">
