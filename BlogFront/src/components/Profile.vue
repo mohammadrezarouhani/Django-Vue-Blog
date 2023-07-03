@@ -1,11 +1,27 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import useAuthStore from '../stores/AuthStore';
+import useUserApi from '../composables/useUserApi'
 
 const authUser = useAuthStore()
+const user = ref({})
+const profile=ref({})
+const useUser=useUserApi()
 
 function changeImage(event) {
-    const file = event.target.files[0];
+    const file = event.target.files[0]
+    profile.value.image=file
+}
+
+onBeforeMount(() => {
+    Object.assign(user.value,authUser.user)
+    Object.assign(profile.value,authUser.user.profile)
+    profile.value.image=null
+})
+
+async function updateProfile(){
+    await useUser.updateUser(user.value)
+    await useUser.updateProfile(profile.value)
 }
 
 </script>
@@ -26,33 +42,38 @@ function changeImage(event) {
         <div class="person-input">
             <div class="table-container">
                 <div class="table-row">
+                    <div class="table-cell table-header">Username</div>
+                    <div class="table-cell"><input type="text" v-model="user.username"></div>
+                </div>
+
+                <div class="table-row">
                     <div class="table-cell table-header">Name</div>
-                    <div class="table-cell"><input type="text" v-model="authUser.user.first_name"></div>
+                    <div class="table-cell"><input type="text" v-model="user.first_name"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Family</div>
-                    <div class="table-cell"><input type="text" v-model="authUser.user.last_name"></div>
+                    <div class="table-cell"><input type="text" v-model="user.last_name"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Phone</div>
-                    <div class="table-cell"><input type="text" v-model="authUser.user.profile.phone_number"></div>
+                    <div class="table-cell"><input type="text" v-model="profile.phone_number"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Email</div>
-                    <div class="table-cell"><input type="text" v-model="authUser.user.email"></div>
+                    <div class="table-cell"><input type="text" v-model="user.email"></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Address</div>
                     <div class="table-cell"><textarea name="address" id="" cols="60" rows="10"
-                            v-model="authUser.user.profile.address"> some text</textarea></div>
+                            v-model="profile.address"> some text</textarea></div>
                 </div>
                 <div class="table-row">
                     <div class="table-cell table-header">Summary</div>
                     <div class="table-cell"><textarea name="address" id="" cols="60" rows="10"
-                            v-model="authUser.user.profile.summary"> some text</textarea></div>
+                            v-model="profile.summary"> some text</textarea></div>
                 </div>
                 <div class="table-row">
-                    <input type="submit" value="Update">
+                    <input type="submit" value="Update" @click="updateProfile">
                 </div>
             </div>
         </div>

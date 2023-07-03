@@ -15,13 +15,13 @@ class PostSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['id', 'user', 'phone_number', 'summary', 'image']
+        fields = ['id', 'user', 'phone_number','address', 'summary', 'image']
         model = Profile
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['phone_number', 'summary', 'image']
+        fields = ['phone_number','address', 'summary', 'image']
         model = Profile
 
 

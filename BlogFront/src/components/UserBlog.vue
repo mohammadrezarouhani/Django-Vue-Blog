@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import useAuthStore from '../stores/AuthStore'
 import useBlogAPI from '../composables/useBlogAPI'
 import Pagination from '../components/Pagination.vue'
@@ -9,7 +9,7 @@ const blogApi = useBlogAPI()
 const authStore = useAuthStore()
 const { articles } = blogApi
 
-onMounted(async () => {
+onBeforeMount(async () => {
     await authStore.setUser()
     await blogApi.getUserArticles(authStore.user.id)
 })

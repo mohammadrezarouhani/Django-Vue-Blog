@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref,onBeforeMount } from 'vue';
 import { RouterLink } from 'vue-router';
 import useAuthStore from '../stores/AuthStore';
 
 const authStore = useAuthStore()
 const isAuthenticated = ref(window.localStorage.getItem('isAuthenticated'))
+
 
 window.onstorage = (event) => {
     if (event.key === 'isAuthenticated') {
