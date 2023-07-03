@@ -8,4 +8,4 @@ router.register('post', PostViewset, basename='post')
 post_nested = NestedDefaultRouter(router, 'post', lookup='post')
 post_nested.register('comments', PostCommentViewset)
 
-urlpatterns = router.urls+post_nested.urls
+urlpatterns = post_nested.urls

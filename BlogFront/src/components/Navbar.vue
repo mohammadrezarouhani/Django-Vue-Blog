@@ -36,7 +36,7 @@ window.onstorage = (event) => {
                     &nbsp;
                     {{ authStore.user.username }}
                     &nbsp;
-                    <img src="../components/image/profile-1.jpg" alt="failed to load!!!" class="profile-image">
+                    <img :src="authStore.user.profile.image" alt="failed to load!!!" class="profile-image">
                 </a>
                 <ul>
                     <li>

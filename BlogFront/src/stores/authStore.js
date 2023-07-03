@@ -13,6 +13,9 @@ const useAuthStore = defineStore('auth', () => {
         last_name:null,
         username: null,
         email: null,
+        profile:{
+            image:null
+        }
     })
     const refreshToken = ref("")
     const accessToken = ref("")

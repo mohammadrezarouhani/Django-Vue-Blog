@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import useAuthStore from '../stores/AuthStore'
 import useBlogAPI from '../composables/useBlogAPI'
 import Pagination from '../components/Pagination.vue'
+import BlogModal from '../components/BlogModal.vue'
 
 const blogApi = useBlogAPI()
 const authStore = useAuthStore()
@@ -13,10 +14,40 @@ onMounted(async () => {
     await blogApi.getUserArticles(authStore.user.id)
 })
 
+const showModal = ref(false)
+const article_id = ref(null)
+const modalMode = ref('create')
+
+function createPostModal() {
+    showModal.value = true
+    modalMode.value = 'create'
+}
+
+function editPostModal(id) {
+    showModal.value = true
+    article_id.value = id
+    modalMode.value = 'edit'
+}
+
+async function submitArticle(data, update) {
+    data.user = authStore.user.id
+
+    if (update) {
+        await blogApi.updateArticle(data)
+    } else {
+        await blogApi.createArticle(data)
+    }
+
+    showModal.value = false
+}
+
 </script>
 
 <template>
     <div class="article">
+        <BlogModal v-if="showModal" class="modal-component" @close="showModal = false" @submit_data="submitArticle"
+            :article_id="article_id" :mode="modalMode" />
+
         <header>
             <h1>User Blogs</h1>
 
@@ -25,7 +56,7 @@ onMounted(async () => {
                 <input type="text">
             </div>
 
-            <span class="material-symbols-sharp add">add</span>
+            <span class="material-symbols-sharp add" @click="createPostModal">add</span>
         </header>
 
         <Pagination class="pagination" :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage"
@@ -40,7 +71,7 @@ onMounted(async () => {
                                 v-if="article.summary.length > 30">...</span></p>
                     </div>
                     <div class="actions">
-                        <span class="material-symbols-sharp open" >
+                        <span class="material-symbols-sharp open" @click="editPostModal(article.id)">
                             open_in_new
                         </span>
 
@@ -55,7 +86,7 @@ onMounted(async () => {
     </div>
 </template>
 
-<style>
+<style scoped>
 img {
     width: 100%;
     height: 60%;
@@ -64,6 +95,12 @@ img {
 .article {
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.article .modal-component {
+    position: absolute;
+    width: 100%;
 }
 
 .article header {
@@ -158,7 +195,7 @@ main .card-container .card a:hover {
     background-color: var(--color-light);
 }
 
-main .card-container .card .actions{
+main .card-container .card .actions {
     display: flex;
     align-items: right;
     position: absolute;
@@ -167,14 +204,14 @@ main .card-container .card .actions{
     right: 20px;
 }
 
-main .card-container .card .actions .delete{
+main .card-container .card .actions .delete {
     color: var(--color-info-light);
     font-weight: bold;
     cursor: pointer;
 }
 
-main .card-container .card .actions .open{
-    color: var( --color-primary);
+main .card-container .card .actions .open {
+    color: var(--color-primary);
     font-weight: bold;
     cursor: pointer;
 }

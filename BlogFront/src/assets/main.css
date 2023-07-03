@@ -16,7 +16,7 @@ body {
 input[type="text"],
 textarea {
   font-size: 1.1rem;
-  color: var(--color-dark-variant);
+  color: var(--color-dark);
 }
 
 h1,

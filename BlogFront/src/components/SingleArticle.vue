@@ -1,12 +1,12 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onBeforeMount, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import useBlogAPI from '../composables/useBlogAPI';
 import useCommentApi from '../composables/useCommentApi'
 
 const blogApi = useBlogAPI()
 const route = useRoute()
-const { articles } = blogApi
+const { article} = blogApi
 
 const commentApi = useCommentApi()
 const { comments } = commentApi
@@ -24,9 +24,9 @@ async function addComment() {
     comment.text = null
 }
 
-onMounted(() => {
-    blogApi.getSingleArticle(route.params.id)
-    commentApi.getPostComment(route.params.id)
+onBeforeMount(async () => {
+    await blogApi.getSingleArticle(route.params.id)
+    await commentApi.getPostComment(route.params.id)
 })
 
 
@@ -36,15 +36,14 @@ onMounted(() => {
     <div class="container clearfix">
         <div class="content">
             <h1>
-                {{ articles.title }}
+                {{ article.title }}
             </h1>
-
             <div class="article-image">
-                <img :src="articles.image" alt="">
+                <img :src="article.image" alt="">
             </div>
 
             <p>
-                {{ articles.content }}
+                {{ article.content }}
             </p>
         </div>
         &nbsp;

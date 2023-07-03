@@ -12,7 +12,7 @@ class Profile(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     summary = models.TextField()
     address = models.TextField()
-    image = models.ImageField(upload_to=paths.profile_image_upload)
+    image = models.ImageField(upload_to=paths.profile_image_upload, null=True, blank=True)
 
 
 class Post(models.Model):
@@ -20,6 +20,6 @@ class Post(models.Model):
     title = models.CharField(max_length=115)
     summary = models.CharField(max_length=512)
     content = models.TextField()
-    image = models.ImageField(upload_to=paths.post_image_upload)
+    image = models.ImageField(upload_to=paths.post_image_upload, null=True, blank=True)
     create_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(blank=True, null=True)
