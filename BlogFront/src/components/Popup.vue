@@ -1,27 +1,17 @@
 <script setup>
 import { Transition, ref, onMounted } from 'vue';
+import useComponentStore from '../stores/componentStore'
 
 const { message, status } = defineProps(['message', 'status'])
-const emit=defineEmits(['dismiss'])
-const show=ref(false)
-
-const dismissPopup = () => {
-    show.value=false
-    emit("dismiss")
-}
-
-onMounted(() => {
-    if (show.value) {
-        setTimeout(dismissPopup, 3000)
-    }
-})
-
+const componentStore = useComponentStore()
 </script>
 
 <template>
     <div class="popup">
         <Transition name="popupShow" appear>
-            <p v-if="show" class="message" :class="status=='success' ? 'success' : 'error'">{{ message }}</p>
+            <p class="message" :class="componentStore.popup.action == 'success' ? 'success' : 'error'">
+                {{ componentStore.popup.message }}
+            </p>
         </Transition>
 
     </div>
@@ -29,6 +19,7 @@ onMounted(() => {
 
 <style scoped>
 .popup {
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;

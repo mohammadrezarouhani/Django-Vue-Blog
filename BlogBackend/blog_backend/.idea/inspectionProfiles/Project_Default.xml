@@ -1,0 +1,20 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="blog.models.Post.objects" />
+          <option value="store.models.ProductImage.objects" />
+          <option value="store.models.OrderItem.*" />
+          <option value="django.db.models.fields.related.OneToOneField.last_name" />
+          <option value="django.db.models.fields.related.OneToOneField.first_name" />
+          <option value="blog.models.Profile.objects" />
+          <option value="comments.models.Comments.*" />
+          <option value="super.get_queryset" />
+          <option value="super.queryset" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

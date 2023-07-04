@@ -3,7 +3,7 @@ import axios from "axios";
 import { baseURL } from "../services/baseUrl";
 import axiosInstance from '../services/axios'
 import { routeLocationKey } from "vue-router";
-
+import useComponentStore from '../stores/componentStore'
 
 export default function usersBlog() {
   const articles = ref([]);
@@ -12,6 +12,7 @@ export default function usersBlog() {
   const currentPage = ref(1);
   const nextPage = ref(null)
   const prevPage = ref(null)
+  const componentStore=useComponentStore()
 
   async function getAllArticles() {
     await axios.get(`${baseURL}/api/blog/post/?page=1`)

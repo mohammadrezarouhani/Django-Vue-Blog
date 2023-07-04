@@ -14,6 +14,7 @@ function changeImage(event) {
 }
 
 onBeforeMount(() => {
+    authUser.setUser()
     Object.assign(user.value,authUser.user)
     Object.assign(profile.value,authUser.user.profile)
     profile.value.image=null
