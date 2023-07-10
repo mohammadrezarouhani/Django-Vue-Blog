@@ -4,7 +4,7 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { baseURL } from "../services/baseUrl";
 import axiosInstance from "../services/axios";
-
+import useComponentStore from '../stores/componentStore'
 
 const useAuthStore = defineStore('auth', () => {
     const user = reactive({
@@ -22,7 +22,7 @@ const useAuthStore = defineStore('auth', () => {
     const message = ref("")
     const messageStatus = ref("")
     const router = useRouter()
-
+    const componentStore=useComponentStore()
 
     async function setUser() {
         await axiosInstance.get('/auth/users/me/',{
@@ -88,6 +88,7 @@ const useAuthStore = defineStore('auth', () => {
         }).then(response => {
             messageStatus.value = "success"
             message.value = `user ${credentials.username} created successfully`;
+            componentStore.showPopup(message.value, 'success')
             setTimeout(() => router.push('/login'), 3000)
         }).catch(error => {
             if (error.code == `ERR_BAD_REQUEST`) {
@@ -95,6 +96,7 @@ const useAuthStore = defineStore('auth', () => {
             } else {
                 message.value = "something went wrong please contact support"
             }
+            componentStore.showPopup(message.value, 'error')
         })
     }
 

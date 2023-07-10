@@ -1,18 +1,20 @@
 import { ref } from 'vue'
 import axiosInstance from '../services/axios'
 import useAuthStore from '../stores/AuthStore'
+import useComponentStore from '../stores/componentStore'
 
 export default function useUser() {
     const user = ref(null)
-    const authStore=useAuthStore()
-    
+    const authStore = useAuthStore()
+    const componentStore = useComponentStore()
+
     async function updateUser(user) {
         await axiosInstance.put(`/auth/users/${user.id}/`, user)
             .then(response => {
-                // show popup
+                componentStore.showPopup("edited success", 'success')
             })
             .catch(error => {
-                // show popup
+                componentStore.showPopup("there is problem plese contact support", 'error')
             })
     }
 

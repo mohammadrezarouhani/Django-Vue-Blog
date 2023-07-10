@@ -23,3 +23,6 @@ class Post(models.Model):
     image = models.ImageField(upload_to=paths.post_image_upload, null=True, blank=True)
     create_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        ordering=['-create_at']

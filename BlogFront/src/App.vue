@@ -25,7 +25,7 @@ onMounted(async()=>{
 <style scoped>
 
 .popup{
-    position: absolute;
+    position: fixed;
 }
 
 </style>

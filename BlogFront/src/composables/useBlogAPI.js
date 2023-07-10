@@ -12,7 +12,7 @@ export default function usersBlog() {
   const currentPage = ref(1);
   const nextPage = ref(null)
   const prevPage = ref(null)
-  const componentStore=useComponentStore()
+  const componentStore = useComponentStore()
 
   async function getAllArticles() {
     await axios.get(`${baseURL}/api/blog/post/?page=1`)
@@ -23,9 +23,8 @@ export default function usersBlog() {
         lastPage.value = Math.ceil(response.data.count / 5);
       })
       .catch(error => {
-        console.log('error in getAllArticles')
+        componentStore.showPopup("there is problem plese contact support", 'error')
       })
-
   }
 
 
@@ -36,7 +35,7 @@ export default function usersBlog() {
         article.value = response.data
       })
       .catch(error => {
-        console.log('error in get single article')
+        componentStore.showPopup("there is problem plese contact support", 'error')
       })
   }
 
@@ -51,7 +50,7 @@ export default function usersBlog() {
         lastPage.value = Math.ceil(response.data.count / 5);
       })
       .catch(error => {
-        console.log('error in getAllArticles')
+        componentStore.showPopup("there is problem plese contact support", 'error')
       })
   }
 
@@ -65,7 +64,7 @@ export default function usersBlog() {
         currentPage.value++
       })
       .catch(error => {
-        console.log(error)
+        componentStore.showPopup("there is problem plese contact support", 'error')
       })
   }
 
@@ -79,7 +78,7 @@ export default function usersBlog() {
         currentPage.value--
       })
       .catch(error => {
-        console.log(error)
+        componentStore.showPopup("there is problem plese contact support", 'error')
       })
   }
 
@@ -98,7 +97,7 @@ export default function usersBlog() {
         lastPage.value = Math.ceil(response.data.count / 5);
       })
       .catch(error => {
-        console.log('error in getAllArticles')
+        componentStore.showPopup("there is problem plese contact support", 'error')
       })
   }
 
@@ -113,11 +112,11 @@ export default function usersBlog() {
 
       await axios.post(`${baseURL}/api/blog/post/`, formData)
         .then(response => {
-          // show popup
+          componentStore.showPopup("article created successfully", 'success')
           articles.value.unshift(response.data)
         })
         .catch(error => {
-          console.error('Error creating article:', error);
+          componentStore.showPopup("there is problem plese contact support", 'error')
         })
     }
   }
@@ -131,49 +130,48 @@ export default function usersBlog() {
       formData.append('user', article.user);
 
       if (article.image instanceof File && article.image.size > 0) {
-        console.log('image')
         formData.append('image', article.image);
       }
 
       await axios.put(`${baseURL}/api/blog/post/${article.id}/`, formData)
         .then(response => {
+          componentStore.showPopup("edited successfully!!!", 'success')
           getUserArticles(article.user)
         })
         .catch(error => {
-          // Handle error - show error message or perform necessary actions
-          console.error('Error updating article:', error.response);
+          componentStore.showPopup("there is problem plese contact support", 'error')
         })
     }
   }
 
 
-async function filterArticles(word) {
+  async function filterArticles(word) {
 
-}
+  }
 
 
-function validateObjectData(obj) {
-  Object.values(obj).forEach(el => {
-    if (!Boolean(el)) {
-      return false
-    }
-  })
-  return true
-}
+  function validateObjectData(obj) {
+    Object.values(obj).forEach(el => {
+      if (!Boolean(el)) {
+        return false
+      }
+    })
+    return true
+  }
 
-return {
-  articles,
-  article,
-  lastPage,
-  currentPage,
-  getAllArticles,
-  getSingleArticle,
-  getUserArticles,
-  gotoNextPage,
-  gotoPrevPage,
-  goToPage,
-  createArticle,
-  updateArticle
-}
+  return {
+    articles,
+    article,
+    lastPage,
+    currentPage,
+    getAllArticles,
+    getSingleArticle,
+    getUserArticles,
+    gotoNextPage,
+    gotoPrevPage,
+    goToPage,
+    createArticle,
+    updateArticle
+  }
 
 }

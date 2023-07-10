@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, reactive, onMounted, toRefs } from 'vue';
+import {reactive, onMounted} from 'vue';
 import useBlogApi from '../composables/useBlogAPI'
 
 const emit = defineEmits(['close', 'submit_data'])
