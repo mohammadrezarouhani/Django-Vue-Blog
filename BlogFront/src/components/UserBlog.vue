@@ -6,12 +6,12 @@ import Pagination from '../components/Pagination.vue'
 import BlogModal from '../components/BlogModal.vue'
 
 const blogApi = useBlogAPI()
-const authStore = useAuthStore()
+const AuthStore = useAuthStore()
 const { articles } = blogApi
 
 onBeforeMount(async () => {
-    await authStore.setUser()
-    await blogApi.getUserArticles(authStore.user.id)
+    await AuthStore.setUser()
+    await blogApi.getUserArticles(AuthStore.user.id)
 })
 
 const showModal = ref(false)
@@ -30,7 +30,7 @@ function editPostModal(id) {
 }
 
 async function submitArticle(data, update) {
-    data.user = authStore.user.id
+    data.user = AuthStore.user.id
 
     if (update) {
         await blogApi.updateArticle(data)
@@ -59,8 +59,8 @@ async function submitArticle(data, update) {
             <span class="material-symbols-sharp add" @click="createPostModal">add</span>
         </header>
 
-        <Pagination class="pagination" :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage"
-            :user="authStore.user.id" @next="blogApi.gotoNextPage" @prev="blogApi.gotoPrevPage" @goTo="blogApi.goToPage" />
+        <Pagination v-if="currentPage>lastPage" class="pagination" :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage"
+            :user="AuthStore.user.id" @next="blogApi.gotoNextPage" @prev="blogApi.gotoPrevPage" @goTo="blogApi.goToPage" />
         <main>
             <div class="card-container">
                 <div class="card" v-for="article in articles" :key="article.id">

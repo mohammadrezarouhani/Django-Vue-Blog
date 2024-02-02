@@ -1,15 +1,15 @@
 <script setup>
-import {reactive, onMounted} from 'vue';
+import { reactive, onMounted } from 'vue';
 import useBlogApi from '../composables/useBlogAPI'
 
 const emit = defineEmits(['close', 'submit_data'])
-const { article_id ,mode} = defineProps(['article_id', 'mode'])
+const { article_id, mode } = defineProps(['article_id', 'mode'])
 
 const blogApi = useBlogApi()
 const { article } = blogApi
 
 const initialData = {
-    id:null,
+    id: null,
     title: null,
     summary: null,
     content: null,
@@ -20,12 +20,19 @@ const initialData = {
 const data = reactive(initialData)
 
 function setImage(event) {
-    data.image = event.target.files[0]
+    const file = event.target.files[0]
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        data.image = e.target.result;
+    }
+
+    reader.readAsDataURL(file);
 }
 
 function submitData() {
-    if (mode=='edit') {
-        emit('submit_data', data,  true)
+    if (mode == 'edit') {
+        emit('submit_data', data, true)
     } else {
         emit('submit_data', data, false)
     }
@@ -50,9 +57,9 @@ onMounted(async () => {
                     close
                 </span>
             </div>
-            <img :src="data.image"  >
+            <img v-if="data.image" :src="data.image">
+            <img v-else src="@/assets/no-content.webp">
             <input type="file" accept="image/*" @change="setImage">
-
             <input type="text" placeholder="title" v-model="data.title">
             <input type="text" placeholder="summary" v-model="data.summary">
             <textarea name="content" id="" cols="30" rows="10" placeholder="Content" v-model="data.content"></textarea>
@@ -74,18 +81,19 @@ onMounted(async () => {
 
 .modal {
     background-color: var(--color-white);
-    border-radius: var(--card-border-radius);
+    border-radius: .6rem;
     box-shadow: var(--box-shadow-1);
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: var(--card-padding);
-    width: 40%;
-
+    padding: .4rem;
+    width: 50%;
+    height: 60%;
 }
 
 .modal textarea {
     resize: none;
+    height: 5rem;
 }
 
 .modal .close {
@@ -105,11 +113,12 @@ onMounted(async () => {
 }
 
 .modal .close span:hover {
-    background-color: var(--color-info-light);
+    color: var(--color-info-light);
     transition: all 300ms ease;
 }
 
-.overlay .modal img{
-    height: 15rem;
+.overlay .modal img {
+    height: 10rem;
+    padding: 0px 40px;
 }
 </style>

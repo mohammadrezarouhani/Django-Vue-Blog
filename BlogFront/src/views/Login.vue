@@ -1,9 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
 import { RouterLink } from 'vue-router';
-import useAuthStore from '../stores/authStore';
+import useAuthStore from '../stores/AuthStore';
 
-const authStore = useAuthStore()
+const AuthStore = useAuthStore()
 
 const credentials = reactive({
     'username': null,
@@ -11,7 +11,7 @@ const credentials = reactive({
 })
 
 const onSubmitForm = () => {
-    authStore.handleLogin(credentials)
+    AuthStore.handleLogin(credentials)
 }
 
 </script>
@@ -173,4 +173,4 @@ input[type="submit"]:hover {
 .signup_link a:hover {
     text-decoration: underline;
 }
-</style>
+</style>../stores/AuthStore

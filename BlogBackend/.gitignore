@@ -1,0 +1,4 @@
+*.pyc
+.idea
+.blog_venv
+.venv

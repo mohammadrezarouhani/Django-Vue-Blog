@@ -3,7 +3,7 @@ import { ref,onBeforeMount } from 'vue';
 import { RouterLink } from 'vue-router';
 import useAuthStore from '../stores/AuthStore';
 
-const authStore = useAuthStore()
+const AuthStore = useAuthStore()
 const isAuthenticated = ref(window.localStorage.getItem('isAuthenticated'))
 
 
@@ -35,15 +35,16 @@ window.onstorage = (event) => {
                 <a href="#">
                     <span class="material-symbols-sharp">arrow_drop_down</span>
                     &nbsp;
-                    {{ authStore.user.username }}
+                    {{ AuthStore.user.username }}
                     &nbsp;
-                    <img :src="authStore.user.profile.image" alt="failed to load!!!" class="profile-image">
+                    <img v-if="AuthStore.user.profile.image" :src="AuthStore.user.profile.image" class="profile-image">
+                    <img v-else src="@/assets/profile2.png" class="profile-image" >
                 </a>
                 <ul>
                     <li>
                         <RouterLink to="/pannel">Dashboard</RouterLink>
                     </li>
-                    <li @click="authStore.handleLogout" class="logout"><a href="#">Logout</a></li>
+                    <li @click="AuthStore.handleLogout" class="logout"><a href="#">Logout</a></li>
                 </ul>
             </li>
         </ul>

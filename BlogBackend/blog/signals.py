@@ -9,6 +9,4 @@ from blog.models import Profile
 def on_profile_save(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-        instance.set_password(instance.password)
         instance.save()

@@ -5,9 +5,9 @@ import Dashboard from '../components/Dashboard.vue';
 import UserBlog from '../components/UserBlog.vue';
 import Sidebar from '../components/Sidebar.vue';
 import Profile from '../components/Profile.vue';
-import useAuthStore from '../stores/authStore';
+import useAuthStore from '../stores/AuthStore';
 
-const authStore = useAuthStore()
+const AuthStore = useAuthStore()
 
 const currentTabIndex = ref(0)
 
@@ -55,4 +55,4 @@ const componentList = [
 .container .component {
     grid-area: component;
 }
-</style>
+</style>../stores/AuthStore

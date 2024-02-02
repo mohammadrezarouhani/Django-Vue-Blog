@@ -2,15 +2,14 @@
 import { ref, reactive } from 'vue'
 import { storeToRefs } from 'pinia';
 import { RouterLink } from 'vue-router';
-import  useAuthStore  from '../stores/authStore'
-import PopUP from '../components/PopUP.vue';
+import  useAuthStore  from '../stores/AuthStore'
 
 const authStore = useAuthStore()
 const { message, messageStatus } = storeToRefs(authStore)
 
 const showPopUp = ref(false)
 
-const creadentials = reactive({
+const credentials = reactive({
     email: null,
     username: null,
     password: null,
@@ -19,10 +18,10 @@ const creadentials = reactive({
 
 const onSubmitForm = () => {
     authStore.handleSignUp({
-        'username': creadentials.username,
-        'email': creadentials.email,
-        'password': creadentials.password,
-        'password_repeat': creadentials.password_repeat
+        'username': credentials.username,
+        'email': credentials.email,
+        'password': credentials.password,
+        'password_repeat': credentials.password_repeat
     })
 
     showPopUp.value = true
@@ -35,27 +34,33 @@ const onSubmitForm = () => {
         <div class="center">
             <h1>SignUp</h1>
             <form @submit.prevent="onSubmitForm">
-                <div class="txt_field">
-                    <input type="email" v-model="creadentials.email" required>
+                <!-- <div class="txt_field" id="email">
+                    <input type="email" v-model="credentials.email" required>
                     <span></span>
                     <label>email</label>
+                </div> -->
+                <div class="txt_field" id="email">
+                    <input type="text" v-model="credentials.email" required>
+                    <span></span>
+                    <label>Email</label>
                 </div>
 
-                <div class="txt_field">
-                    <input type="text" v-model="creadentials.username" required>
+                <div class="txt_field" id="username">
+                    <input type="text" v-model="credentials.username" required>
                     <span></span>
                     <label>Username</label>
                 </div>
-                <div class="txt_field">
-                    <input type="password" v-model="creadentials.password" required>
+
+                <div class="txt_field" id="password1">
+                    <input type="password" v-model="credentials.password" required>
                     <span></span>
                     <label>Password</label>
                 </div>
 
-                <div class="txt_field">
-                    <input type="password" v-model="creadentials.password_repeat" required>
+                <div class="txt_field" id="password2">
+                    <input type="password" v-model="credentials.password_repeat" required>
                     <span></span>
-                    <label>Password reapeat</label>
+                    <label>Password repeat</label>
                 </div>
                 <input type="submit" value="SignUp">
 

@@ -40,7 +40,7 @@ onMounted(async () => {
                     </RouterLink>
                 </div>
             </div>
-            <Pagination :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage" @next="blogApi.gotoNextPage"
+            <Pagination v-if="currentPage>lastPage" :currentPage="blogApi.currentPage" :lastPage="blogApi.lastPage" @next="blogApi.gotoNextPage"
                 @prev="blogApi.gotoPrevPage" @goTo="blogApi.goToPage" />
         </div>
 
