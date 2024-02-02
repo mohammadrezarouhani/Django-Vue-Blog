@@ -4,14 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+celery = "*"
+pytest = "*"
+pytest-django = "*"
+locust = "*"
 django = "*"
-django-cors-headers = "*"
-djangorestframework = "*"
-pillow = "*"
-djangorestframework-simplejwt = "*"
-djoser = "*"
 
 [dev-packages]
+pytest = "*"
+pytest-django = "*"
+autopep8 = "*"
+model-bakery = "*"
 
 [requires]
 python_version = "3.10"

@@ -1,10 +1,11 @@
 <script setup>
 const emit = defineEmits(['next', 'prev', 'goTo'])
-const { lastPage,currentPage,user } = defineProps(['currentPage', 'lastPage','user'])
-function pages(){
-    let arr=[]
-    for(let i=1;i<4;i++){
-        if(i<lastPage.value){
+const { lastPage, currentPage, user } = defineProps(['currentPage', 'lastPage', 'user'])
+
+function pages() {
+    let arr = []
+    for (let i = 1; i < 4; i++) {
+        if (i < lastPage.value) {
             arr.push(i)
         }
     }
@@ -14,22 +15,22 @@ function pages(){
 </script>
 
 <template>
-    <div class="pagination">
-        
+    <div v-if="lastPage.value != 1" class="pagination">
+
         <a href="#top" @click="emit('prev')">
             <span class="material-symbols-sharp">first_page</span>
         </a>
 
-        <a class="current" href="#top" @click="emit('goTo',currentPage.value,user)">
-            {{currentPage}}
+        <a class="current" href="#top" @click="emit('goTo', currentPage.value, user)">
+            {{ currentPage }}
         </a>
 
-        <a v-for="page in pages()" class="page" href="#top" @click="emit('goTo',page,user)">
-            {{page}}
+        <a v-for="page in pages()" class="page" href="#top" @click="emit('goTo', page, user)">
+            {{ page }}
         </a> ...
 
-        <a class="page" href="#top" @click="emit('goTo',lastPage.value,user)">
-            {{lastPage}}
+        <a class="page" href="#top" @click="emit('goTo', lastPage.value, user)">
+            {{ lastPage }}
         </a>
         <a href="#top" @click="emit('next')"><span class="material-symbols-sharp">last_page </span></a>
     </div>

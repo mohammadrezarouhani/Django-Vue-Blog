@@ -64,22 +64,22 @@ const useAuthStore = defineStore('auth', () => {
     }
 
     async function handleSignUp(credentials) {
-        messageStatus.value = "error"
-        if (!(credentials.password == credentials.password_repeat)) {
-            message.value = "passwords is not equals"
-            return
-        }
-        if (!validatePassword(credentials.password)) {
-            console.log(validatePassword(credentials.password))
-            message.value = "weak password"
-            return
-        } if (!validateEmail(credentials.email)) {
-            message.value = "email format is not correct"
-            return
-        } if (credentials.username.lenght < 6) {
-            message.value = "username lenght should be greater than 6 letter"
-            return
-        }
+        // messageStatus.value = "error"
+        // if (!(credentials.password == credentials.password_repeat)) {
+        //     message.value = "passwords is not equals"
+        //     return
+        // }
+        // if (!validatePassword(credentials.password)) {
+        //     console.log(validatePassword(credentials.password))
+        //     message.value = "weak password"
+        //     return
+        // } if (!validateEmail(credentials.email)) {
+        //     message.value = "email format is not correct"
+        //     return
+        // } if (credentials.username.lenght < 6) {
+        //     message.value = "username lenght should be greater than 6 letter"
+        //     return
+        // }
 
         await axios.post(`${baseURL}/auth/users/`, {
             'username': credentials.username,

@@ -1,6 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
+from django.db.models import Count
 
 
 class Date:
@@ -9,7 +10,7 @@ class Date:
 
 
 class CommentsManager(models.Manager):
-    def create_comment(self, obj_type, obj_id, **data):
+    def create_comment(self, obj_type, obj_id, content_obj, **data):
         content_type = ContentType.objects.get_for_model(obj_type)
         comment = Comments.objects.create(content_type=content_type, object_id=obj_id, **data)
         return comment

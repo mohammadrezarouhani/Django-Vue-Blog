@@ -1,18 +1,24 @@
 <script setup>
-import { onMounted,ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import useBlogAPI from '../composables/useBlogAPI';
 import useAuthStore from '../stores/AuthStore'
+import useCommentApi from '../composables/useCommentApi'
 
-const articlesCount=ref('')
-const authStore=useAuthStore()
+const articlesCount = ref('')
+
+const authStore = useAuthStore()
+
 const blogApi = useBlogAPI()
-const {articles}=blogApi
+const { articles } = blogApi
 
+const commentApi = useCommentApi()
+const { userComments } = commentApi
 
 onMounted(async () => {
     await authStore.setUser()
     await blogApi.getUserArticles(authStore.user.id)
-    articlesCount.value=articles.value.length
+    await commentApi.getUserComment()
+    articlesCount.value = articles.value.length
 })
 
 </script>
@@ -24,7 +30,7 @@ onMounted(async () => {
                 <div class="card">
                     <span class="material-symbols-sharp " style="color: var(--color-primary);">comment</span>
                     <h2>Comments</h2>
-                    <h3>10</h3>
+                    <h3>{{ userComments.count }}</h3>
                 </div>
                 <div class="card">
                     <span class="material-symbols-sharp" style="color: var(--color-danger);">pages</span>
@@ -33,11 +39,11 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
-        
+
         <div class="recent-comment">
-            <div class="comment">
+            <div class="comment" v-for="comment in userComments.results" :key="comment.id">
                 <span class="material-symbols-sharp">reviews</span>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit, voluptas.</p>
+                <p>{{ comment.text }}</p>
             </div>
         </div>
 
@@ -56,7 +62,7 @@ onMounted(async () => {
                     <tr v-for="article in articles" :key="article.id">
 
                         <td>{{ article.title }}</td>
-                        <td>{{ article.summary.slice(0,25) }}.....  </td>
+                        <td>{{ article.summary.slice(0, 25) }}..... </td>
                         <td>23</td>
                         <td>2 july,2020</td>
                     </tr>
@@ -129,6 +135,7 @@ onMounted(async () => {
     gap: .8rem;
     height: 20%;
     width: 100%;
+    margin-top: 1rem;
 }
 
 

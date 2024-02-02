@@ -34,7 +34,7 @@ class ProfileViewset(ModelViewSet):
         if request.method == 'GET':
             serializer = ProfileSerializer(profile)
         else:
-            serializer = ProfileSerializer(profile,data=request.data)
+            serializer = ProfileSerializer(profile, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
 

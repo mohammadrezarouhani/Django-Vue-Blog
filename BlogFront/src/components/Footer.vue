@@ -1,20 +1,36 @@
+<script>
+import { reactive } from 'vue';
+
+const contact = reactive({
+    email: '',
+    message: ''
+})
+
+function submitForm() {
+
+}
+
+</script>
+
 <template>
     <div>
         <div class="footer">
             <div class="footer-content">
                 <!-- about -->
                 <div class="about">
-                    <h1 class="logo-text"><span>My</span>Blog</h1>
+                    <h1 class="logo-text">Personal Blog</h1>
                     <p class="description">
-                        personal blog that designed by <span> mohammadreza rouhani</span> and <span>eghbal hasan nezad</span>
+                        personal blog that designed by <span> mohammadreza rouhani</span>
                     </p>
                     <div class="contact">
                         <span><a href=""><i class="fas fa-phone">&nbsp; +989057622924</i></a></span>
-                        <span><a href=""><i class="fas fa-envelope">&nbsp; rezarouhanitonekaboni@gmail.com</i></a></span>
+                        <span><a href="mailto:rezarouhanitonekaboni@gmail.com"><i class="fas fa-envelope">&nbsp;
+                                    rezarouhanitonekaboni@gmail.com</i></a></span>
                     </div>
                     <div class="social">
                         <span><a href=""><i class="fab fa-instagram"></i></a></span>
-                        <span><a href=""><i class="fab fa-linkedin"></i></a></span>
+                        <span><a href="https://www.linkedin.com/in/mohammadreza-rouhani-735213205"><i
+                                    class="fab fa-linkedin"></i></a></span>
                     </div>
                 </div>
 
@@ -41,7 +57,7 @@
                 <div class="contact-form">
                     <h1>Contact Us</h1>
 
-                    <form action="index.html" method="post">
+                    <form @submit="submitForm" method="post">
                         <input type="email" class="text-input contact-input" placeholder="your Email">
                         <textarea name="text" class="text-input contact-input" placeholder="Enter your Message"></textarea>
                         <button type="submit" class="send-button">
@@ -88,13 +104,15 @@
 
 .footer span {
     color: #00f1fa;
+    font-size: 1rem;
 }
 
 .footer .bottom {
     width: 100%;
     height: 20px;
     text-align: center;
-    background: linear-gradient(120deg, #2980b9, white);;
+    background: linear-gradient(120deg, #2980b9, white);
+    ;
     color: black;
     position: absolute;
     bottom: 0px;
@@ -118,7 +136,7 @@
 .footer .footer-content .about .contact span {
     display: block;
     margin-bottom: 8PX;
-    font-size: 1rem;
+    font-size: .2rem;
 }
 
 
@@ -172,7 +190,17 @@
     flex: 1;
 }
 
+.footer .footer-content .contact-form input[type="email"] {
+    font-size: 1.2rem;
+}
+
 .footer .footer-content .contact-form textarea {
     height: 80px;
+    font-size: 1.2rem;
+}
+
+.footer .footer-content .contact-form button {
+    height: 2.2rem;
+    font-size: 1rem;
 }
 </style>

@@ -50,7 +50,7 @@ onMounted(async () => {
                     close
                 </span>
             </div>
-            <img :src="data.image " >
+            <img :src="data.image"  >
             <input type="file" accept="image/*" @change="setImage">
 
             <input type="text" placeholder="title" v-model="data.title">
@@ -107,5 +107,9 @@ onMounted(async () => {
 .modal .close span:hover {
     background-color: var(--color-info-light);
     transition: all 300ms ease;
+}
+
+.overlay .modal img{
+    height: 15rem;
 }
 </style>

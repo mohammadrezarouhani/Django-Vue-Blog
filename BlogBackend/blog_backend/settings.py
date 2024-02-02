@@ -18,7 +18,6 @@ ALLOWED_HOSTS = []
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
-
 ]
 # Application definition
 
@@ -81,6 +80,29 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mydb',
+#         'USER': 'root',
+#         'PASSWORD': 'admin',
+#         'HOST':'localhost',
+#         'PORT':'3307',
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'blog',
+        'USER': 'postgres',
+        'PASSWORD': 'mypassword',
+        'HOST': 'postgres',
+        'PORT': '5432',
     }
 }
 

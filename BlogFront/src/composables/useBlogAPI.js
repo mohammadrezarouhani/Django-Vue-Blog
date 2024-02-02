@@ -23,7 +23,7 @@ export default function usersBlog() {
         lastPage.value = Math.ceil(response.data.count / 5);
       })
       .catch(error => {
-        componentStore.showPopup("there is problem plese contact support", 'error')
+        componentStore.showPopup("there is problem plese contact support !!!", 'error')
       })
   }
 
@@ -35,7 +35,7 @@ export default function usersBlog() {
         article.value = response.data
       })
       .catch(error => {
-        componentStore.showPopup("there is problem plese contact support", 'error')
+        componentStore.showPopup("there is problem plese contact support !!!", 'error')
       })
   }
 
@@ -50,43 +50,45 @@ export default function usersBlog() {
         lastPage.value = Math.ceil(response.data.count / 5);
       })
       .catch(error => {
-        componentStore.showPopup("there is problem plese contact support", 'error')
+        componentStore.showPopup("there is problem plese contact support !!!", 'error')
       })
   }
 
 
   async function gotoNextPage() {
-    await axios.get(nextPage.value)
-      .then(response => {
-        articles.value = response.data.results;
-        nextPage.value = response.data.next
-        prevPage.value = response.data.previous
-        currentPage.value++
-      })
-      .catch(error => {
-        componentStore.showPopup("there is problem plese contact support", 'error')
-      })
+    if (nextPage.value) {
+      await axios.get(nextPage.value)
+        .then(response => {
+          articles.value = response.data.results;
+          nextPage.value = response.data.next
+          prevPage.value = response.data.previous
+          currentPage.value++
+        })
+        .catch(error => {
+          componentStore.showPopup("there is problem plese contact support", 'error')
+        })
+    }
   }
 
 
   async function gotoPrevPage() {
-    await axios.get(prevPage.value)
-      .then(response => {
-        articles.value = response.data.results;
-        nextPage.value = response.data.next
-        prevPage.value = response.data.previous
-        currentPage.value--
-      })
-      .catch(error => {
-        componentStore.showPopup("there is problem plese contact support", 'error')
-      })
+    if (prevPage.value) {
+      await axios.get(prevPage.value)
+        .then(response => {
+          articles.value = response.data.results;
+          nextPage.value = response.data.next
+          prevPage.value = response.data.previous
+          currentPage.value--
+        })
+        .catch(error => {
+          componentStore.showPopup("there is problem plese contact support", 'error')
+        })
+    }
   }
 
 
   async function goToPage(number, user = null) {
     const url = Boolean(user) ? `${baseURL}/api/blog/post/?page=${number}&&user=${user}` : `${baseURL}/api/blog/post/?page=${number}`
-
-    console.log(url)
 
     await axios.get(url)
       .then(response => {

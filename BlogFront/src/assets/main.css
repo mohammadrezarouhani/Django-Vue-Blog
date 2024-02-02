@@ -41,11 +41,6 @@ a:hover {
   transition: all 300ms ease;
 }
 
-span {
-  font-size: 1.5rem !important;
-}
-
-
 .btn {
   padding: .5rem 1rem;
   background: #006669;
