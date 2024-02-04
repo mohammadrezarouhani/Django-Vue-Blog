@@ -41,8 +41,9 @@ const componentStore = useComponentStore()
 }
 
 .popup .success {
-    background-color: #27ae60;
+    background-color: var(--color-primary-light);
     color: white;
+    background-color: var(--color-primary);
 }
 
 .popup .error {

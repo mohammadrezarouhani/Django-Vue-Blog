@@ -5,5 +5,5 @@ from rest_framework_nested.routers import NestedDefaultRouter, DefaultRouter
 router = DefaultRouter()
 router.register('post', PostViewset, basename='post')
 
-router.register('profile', ProfileViewset,basename='profile')
+router.register('profile', ProfileViewset, basename='profile')
 urlpatterns = router.urls

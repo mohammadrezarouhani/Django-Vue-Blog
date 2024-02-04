@@ -6,12 +6,12 @@ import useComponentStore from './stores/componentStore'
 
 import Popup from './components/Popup.vue'
 
-const authStore=useAuthStore()
+const AuthStore=useAuthStore()
 const componentStore=useComponentStore()
 
 onMounted(async()=>{
     if(window.localStorage.getItem('isAuthenticated')){
-        await authStore.setUser()
+        await AuthStore.setUser()
     }
 })
 

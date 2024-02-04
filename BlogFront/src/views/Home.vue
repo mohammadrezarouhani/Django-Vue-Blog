@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar.vue';
 import Slider from '../components/Slider.vue';
 import MainContent from '../components/MainContent.vue';
 import Footer from '../components/Footer.vue';
-import useAuthStore from '../stores/authStore';
+import useAuthStore from '../stores/AuthStore';
 
 
 </script>
@@ -17,4 +17,4 @@ import useAuthStore from '../stores/authStore';
         <MainContent/>
         <Footer />
     </div>
-</template>
+</template>../stores/AuthStore

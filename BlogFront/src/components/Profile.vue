@@ -30,7 +30,8 @@ async function updateProfile(){
 <template>
     <div class="profile">
         <div class="person-info">
-            <img :src="authUser.user.profile.image" alt="">
+            <img v-if="authUser.user.profile.image" :src="authUser.user.profile.image" >
+            <img v-else src="@/assets/profile2.png" >
             <input type="file" accept="image/*" @change="changeImage">
             <label class="lfullname">{{ authUser.user.username }}</label>
             <label class="lemail">{{ authUser.user.email }}</label>

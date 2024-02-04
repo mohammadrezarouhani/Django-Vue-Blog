@@ -1,25 +1,19 @@
 from pathlib import Path
 from datetime import timedelta
+import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+env = environ.Env()
+env.read_env('.env')
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8y5b%c7izly2iz&c(hb%f7*ha-71%^*neqdyyh$c6+viet5=1z'
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+CORS_ALLOWED_ORIGINS = env('CORS_ORIGIN_ALLOWED_HOST').split(',')
 
-ALLOWED_HOSTS = []
-
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5173",
-    "http://localhost:5173",
-]
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -73,9 +67,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog_backend.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -83,31 +74,17 @@ DATABASES = {
     }
 }
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mydb',
-#         'USER': 'root',
-#         'PASSWORD': 'admin',
-#         'HOST':'localhost',
-#         'PORT':'3307',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blog',
-        'USER': 'postgres',
-        'PASSWORD': 'mypassword',
-        'HOST': 'postgres',
-        'PORT': '5432',
+        'NAME': env('POSTGRES_DB_NAME'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': int(env('POSTGRES_EXPOSE_PORT')),
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {

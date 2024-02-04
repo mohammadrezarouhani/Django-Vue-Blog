@@ -6,7 +6,7 @@ import useCommentApi from '../composables/useCommentApi'
 
 const articlesCount = ref('')
 
-const authStore = useAuthStore()
+const AuthStore = useAuthStore()
 
 const blogApi = useBlogAPI()
 const { articles } = blogApi
@@ -15,8 +15,8 @@ const commentApi = useCommentApi()
 const { userComments } = commentApi
 
 onMounted(async () => {
-    await authStore.setUser()
-    await blogApi.getUserArticles(authStore.user.id)
+    await AuthStore.setUser()
+    await blogApi.getUserArticles(AuthStore.user.id)
     await commentApi.getUserComment()
     articlesCount.value = articles.value.length
 })
