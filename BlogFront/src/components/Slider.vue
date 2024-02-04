@@ -1,13 +1,14 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { baseURL } from '../services/baseUrl';
 
 const articles = ref([])
 const sliderArticle = ref([])
 const position = ref(1)
 
 onMounted(async () => {
-    const response = await axios.get('http://127.0.0.1:8000/api/blog/post/')
+    const response = await axios.get(`${baseURL}/api/blog/post/`)
     articles.value = response.data.results
     sliderArticle.value = articles.value
 })
