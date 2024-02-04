@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted,ref } from 'vue';
 import useBlogApi from '../composables/useBlogAPI'
 
 const emit = defineEmits(['close', 'submit_data'])
@@ -16,11 +16,12 @@ const initialData = {
     author: null,
     image: null
 }
-
 const data = reactive(initialData)
+const postImage=ref(null)
 
 function setImage(event) {
-    const file = event.target.files[0]
+    postImage.value=event.target.files[0]
+    const file= event.target.files[0]
     const reader = new FileReader();
 
     reader.onload = function (e) {
@@ -31,6 +32,7 @@ function setImage(event) {
 }
 
 function submitData() {
+    data.image=postImage.value
     if (mode == 'edit') {
         emit('submit_data', data, true)
     } else {
@@ -88,7 +90,7 @@ onMounted(async () => {
     gap: 1rem;
     padding: .4rem;
     width: 50%;
-    height: 60%;
+    height:80%;
 }
 
 .modal textarea {

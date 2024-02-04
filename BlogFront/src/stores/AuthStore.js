@@ -55,7 +55,7 @@ const useAuthStore = defineStore("auth", () => {
         window.localStorage.setItem("refreshToken", refreshToken.value);
         window.localStorage.setItem("isAuthenticated", true);
         setUser();
-        componentStore.showPopup("user logged in  successfully");
+        componentStore.showPopup("user logged in  successfully","success");
         setTimeout(() => router.push("/"), 3000);
       })
       .catch((error) => {
