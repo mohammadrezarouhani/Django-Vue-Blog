@@ -59,8 +59,10 @@ const useAuthStore = defineStore("auth", () => {
         setTimeout(() => router.push("/"), 3000);
       })
       .catch((error) => {
-        if (error.response) {
-          componentStore.showPopup(error.response, "error");
+        if (error.response.status==401) {
+          componentStore.showPopup("username or password is wrong", "error");
+        }else{
+          componentStore.showPopup("there is problem with network","error")
         }
       });
   }

@@ -1,7 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
 import environ
-
 env = environ.Env()
 env.read_env('.env')
 
@@ -67,12 +66,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog_backend.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 DATABASES = {
     'default': {

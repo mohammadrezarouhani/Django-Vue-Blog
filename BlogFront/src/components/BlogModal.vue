@@ -88,9 +88,8 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: .4rem;
+    padding: 1rem;
     width: 50%;
-    height:80%;
 }
 
 .modal textarea {

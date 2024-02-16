@@ -1,0 +1,10 @@
+[submodule "BlogBackend"]
+path = BlogBackend
+url = https://gitlab.com/S_JGR/blogbackend.git
+branch = main
+
+
+[submodule "BlogFront"]
+path = BlogFront
+url = https://gitlab.com/S_JGR/blogfront.git
+branch = main

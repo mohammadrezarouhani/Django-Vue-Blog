@@ -17,4 +17,4 @@ import useAuthStore from '../stores/AuthStore';
         <MainContent/>
         <Footer />
     </div>
-</template>../stores/AuthStore
+</template>

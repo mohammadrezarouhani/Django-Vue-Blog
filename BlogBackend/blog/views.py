@@ -18,7 +18,7 @@ class PostViewset(ModelViewSet):
     filterset_fields = ['user']
     queryset = Post.objects.select_related('user').all()
 
-
+    
 class ProfileViewset(ModelViewSet):
     http_method_names = ['get', 'put']
     serializer_class = ProfileSerializer

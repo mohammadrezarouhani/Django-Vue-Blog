@@ -3,3 +3,5 @@
 .idea
 .blog_venv
 .venv
+Pipfile
+Pipfile.lock

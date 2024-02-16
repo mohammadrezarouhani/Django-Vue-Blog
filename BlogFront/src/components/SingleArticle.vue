@@ -28,8 +28,6 @@ onBeforeMount(async () => {
     await blogApi.getSingleArticle(route.params.id)
     await commentApi.getPostComment(route.params.id)
 })
-
-
 </script>
 
 <template>

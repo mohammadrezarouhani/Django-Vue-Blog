@@ -14,7 +14,6 @@ onMounted(async()=>{
         await AuthStore.setUser()
     }
 })
-
 </script>
 
 <template>

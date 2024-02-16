@@ -10,8 +10,6 @@ function onTabClicked(index) {
     emit("tabChange", index)
     currentIndex.value = index
 }
-
-
 </script>
 
 <template>

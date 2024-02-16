@@ -37,7 +37,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
+      
+  front:
+    build:
+      context: ./BlogFront
+    ports:
+      - 4000:80
+    depends_on:
+      - backend
+    volumes:
+      - ./BlogFront:/app
+    
 volumes:
   media:
   static:
