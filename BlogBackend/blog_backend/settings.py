@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
 import environ
+
 env = environ.Env()
 env.read_env('.env')
 
@@ -66,23 +67,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog_backend.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB_NAME'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('POSTGRES_HOST'),
-        'PORT': int(env('POSTGRES_EXPOSE_PORT')),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('POSTGRES_DB_NAME'),
+#         'USER': env('POSTGRES_USER'),
+#         'PASSWORD': env('POSTGRES_PASSWORD'),
+#         'HOST': env('POSTGRES_HOST'),
+#         'PORT': int(env('POSTGRES_EXPOSE_PORT')),
+#     }
+# }
 
 
 AUTH_PASSWORD_VALIDATORS = [

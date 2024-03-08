@@ -149,4 +149,9 @@ header .menu-toggle {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-}</style>
+}
+
+@media screen and (max-width:800px) {
+    
+}
+</style>

@@ -19,7 +19,7 @@ function submitForm() {}
         <div class="about">
           <h1 class="logo-text">Personal Blog</h1>
           <p class="description">
-            personal blog that designed by <span> sara jahangoshai</span>
+            personal blog that designed by <span> mohammadreza rouhani</span>
           </p>
           <div class="contact">
             <span
@@ -30,7 +30,7 @@ function submitForm() {}
             <span
               ><a href="mailto:rezarouhanitonekaboni@gmail.com"
                 ><i class="fas fa-envelope"
-                  >&nbsp; sara.jahangoshai@gmail.com</i
+                  >&nbsp; rezarouhanitonekaboni@gmail.com</i
                 ></a
               ></span
             >
@@ -40,7 +40,7 @@ function submitForm() {}
               ><a href=""><i class="fab fa-instagram"></i></a
             ></span>
             <span
-              ><a href="https://www.linkedin.com/in/sara jahangoshai"
+              ><a href="https://www.linkedin.com/in/mohammadreza rouhani"
                 ><i class="fab fa-linkedin"></i></a
             ></span>
           </div>
@@ -94,7 +94,7 @@ function submitForm() {}
         </div>
 
         <!-- bottom text -->
-        <div class="bottom">&copy; MyBlog | designed by sara jahangoshai</div>
+        <div class="bottom">&copy; MyBlog | designed by mohammadreza rouhani</div>
       </div>
     </div>
   </div>

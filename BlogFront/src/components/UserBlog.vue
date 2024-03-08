@@ -1,14 +1,18 @@
 <!-- @format -->
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import useAuthStore from "../stores/AuthStore";
 import useBlogAPI from "../composables/useBlogAPI";
 import Pagination from "../components/Pagination.vue";
 import BlogModal from "../components/BlogModal.vue";
+import { storeToRefs } from "pinia";
 
+let timer;
 const blogApi = useBlogAPI();
 const AuthStore = useAuthStore();
+const {user}=storeToRefs(AuthStore)
+
 const { articles } = blogApi;
 
 onBeforeMount(async () => {
@@ -42,55 +46,40 @@ async function submitArticle(data, update) {
 
   showModal.value = false;
 }
+
+const searchQuery = ref("");
+
+watch(searchQuery, () => {
+  clearTimeout(timer)
+
+  timer = setTimeout(async () => {
+    await blogApi.filterUserArticle(AuthStore.user.id, searchQuery.value)
+  }, 600)
+});
 </script>
 
 <template>
   <div class="article">
-    <BlogModal
-      v-if="showModal"
-      class="modal-component"
-      @close="showModal = false"
-      @submit_data="submitArticle"
-      :article_id="article_id"
-      :mode="modalMode"
-    />
+    <BlogModal v-if="showModal" class="modal-component" @close="showModal = false" @submit_data="submitArticle"
+      :article_id="article_id" :mode="modalMode" />
 
     <header>
       <h1>User Blogs</h1>
 
       <div class="search">
-        <span
-          class="material-symbols-sharp"
-          style="font-size: 2rem"
-          >search</span
-        >
-        <input type="text" />
+        <span class="material-symbols-sharp" style="font-size: 2rem">search</span>
+        <input type="text" v-model="searchQuery" />
       </div>
 
-      <span
-        class="material-symbols-sharp add"
-        @click="createPostModal"
-        >add</span
-      >
+      <span class="material-symbols-sharp add" @click="createPostModal">add</span>
     </header>
 
-    <Pagination
-      v-if="blogApi.currentPage > blogApi.lastPage"
-      class="pagination"
-      :currentPage="blogApi.currentPage"
-      :lastPage="blogApi.lastPage"
-      :user="AuthStore.user.id"
-      @next="blogApi.gotoNextPage"
-      @prev="blogApi.gotoPrevPage"
-      @goTo="blogApi.goToPage"
-    />
+    <Pagination v-if="blogApi.currentPage > blogApi.lastPage" class="pagination" :currentPage="blogApi.currentPage"
+      :lastPage="blogApi.lastPage" :user="AuthStore.user.id" @next="blogApi.gotoNextPage" @prev="blogApi.gotoPrevPage"
+      @goTo="blogApi.goToPage" />
     <main>
       <div class="card-container">
-        <div
-          class="card"
-          v-for="article in articles"
-          :key="article.id"
-        >
+        <div class="card" v-for="article in articles" :key="article.id">
           <img :src="article.image" />
           <div class="content-info">
             <h2>{{ article.title }}</h2>
@@ -100,14 +89,11 @@ async function submitArticle(data, update) {
             </p>
           </div>
           <div class="actions">
-            <span
-              class="material-symbols-sharp open"
-              @click="editPostModal(article.id)"
-            >
+            <span class="material-symbols-sharp open" @click="editPostModal(article.id)">
               open_in_new
             </span>
 
-            <span class="material-symbols-sharp delete"> delete </span>
+            <span class="material-symbols-sharp delete" @click="blogApi.deletePost(article.id,user.id)"> delete </span>
           </div>
         </div>
       </div>
